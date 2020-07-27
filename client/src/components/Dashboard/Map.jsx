@@ -12,6 +12,7 @@ const Map = (props) => {
   var centerLon = -105.25;
 
   const [center, setCenter] = useState([centerLon, centerLat])
+  const [routes, setRoutes] = useState({})
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
@@ -25,35 +26,73 @@ const Map = (props) => {
     });
     // Adds controls to map interface
     map.addControl(new mapboxgl.NavigationControl());
-      console.log('A moveend event occurred.');
-      getRoutes()
+    getRoutes()
+    console.log("Map Initialized")
 
 
-    map.on('moveend', function() {
+    map.on('moveend', function () {
       let center = map.getCenter();
       console.log('A moveend event occurred.');
-      getRoutes()
-      });
+      getRoutes();
+    });
     return () => map.remove();
   }, []);
 
   function getRoutes() {
-    const maxDistance=10;
-    axios.get("https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=" +
-      centerLat +
-      "&lon=" +
-      centerLon +
-      "&maxDistance=" +
-      maxDistance +
-      "&key=200809636-c7cbec7094518a25d825fd563e1f84ab")
+    // Get all route data for specific center point
+
+    // GET api data for routes
+    const maxDistance = 10;
+    const baseUrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?";
+    const projectKey = "200809636-c7cbec7094518a25d825fd563e1f84ab";
+    axios.get(
+      `${baseUrl}lat=${centerLat}&lon=${centerLon}&maxDistance=${maxDistance}&key=${projectKey}`)
       .then(res => {
         console.log(res.data.routes)
+        // Set data to the current routes
+        setRoutes(res.data.routes)
+        createRouteFeatures(res.data.routes)
       }).catch(err => {
         console.log(err)
       })
   }
-
   
+  //Creates dataset of current routes
+  function createRouteFeatures(currentRoutes) {
+    // Initialize empty features array
+    var routeFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [],
+      },
+    }
+    // Push route data into feature collection
+    for (let i = 0; i < currentRoutes.length; i++) {
+      routeFeatures.data.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [
+            currentRoutes[i].longitude,
+            currentRoutes[i].latitude,
+          ],
+        },
+        properties: {
+          title: `${currentRoutes[i].name}`,
+          "marker-symbol": "monument",
+          description:`<strong> ${currentRoutes[i].name}</strong>
+          <p><a href="${currentRoutes[i].url}
+          " target="_blank" title="Opens in a new window">
+          ${currentRoutes[i].name}</a> is an awesome crack</p>`,
+          icon: "mountain",
+        },
+      });
+    }
+    console.log("Route Features",routeFeatures)
+    return routeFeatures;
+  };
+
 
   return (
     <div className="mapdiv">

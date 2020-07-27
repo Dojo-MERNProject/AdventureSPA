@@ -1,7 +1,16 @@
+// Modules
 import React from 'react';
 import {Router} from '@reach/router'; // Needs the {} to export
-import './App.css';
+
+// CSS
+import './App.css'; // Only need to import here
+import '../src/styles/Dashboard.css';
+import './styles/features/mapbox.css'
+
+
+// Components
 import Dashboard from './components/Dashboard'
+import Map from './components/Dashboard/Map'
 
 function App() {
   return (
@@ -9,6 +18,9 @@ function App() {
       <Router>
         <Dashboard
           path="/Dashboard"
+        />
+        <Map
+          path="/map"
         />
       </Router>
     </div>

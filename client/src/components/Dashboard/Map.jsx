@@ -1,97 +1,63 @@
-import React, {useEffect,useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 import mapboxgl from 'mapbox-gl';
-import fetchFakeData from './data/fetchFakeData'
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const Map = (props) => {
+  var map = {};
+  var lat = 0;
+  var lon = 0;
+  var centerLat = 40.03;
+  var centerLon = -105.25;
 
-  const [center,setCenter] = useState([-74.5, 40])
+  const [center, setCenter] = useState([centerLon, centerLat])
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
+
+    // Generates Base Map
+    var map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: center, // starting position [lng, lat]
       zoom: 9, // starting zoom
     });
+    // Adds controls to map interface
+    map.addControl(new mapboxgl.NavigationControl());
+      console.log('A moveend event occurred.');
+      getRoutes()
 
-    map.on('load', () => {
-      // add the data source for new a feature collection with no features
-      map.addSource('random-points-data', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        },
+
+    map.on('moveend', function() {
+      let center = map.getCenter();
+      console.log('A moveend event occurred.');
+      getRoutes()
       });
-      // now add the layer, and reference the data source above by name
-      map.addLayer({
-        id: 'random-points-layer',
-        source: 'random-points-data',
-        type: 'symbol',
-        layout: {
-          // full list of icons here: https://labs.mapbox.com/maki-icons
-          'icon-image': 'bakery-15', // this will put little croissants on our map
-          'icon-padding': 0,
-          'icon-allow-overlap': true,
-        },
-      });
-    });
+    return () => map.remove();
+  }, []);
 
-    map.on('moveend', async () => {
-      // get new center coordinates
-      const { lng, lat } = map.getCenter();
-      // fetch new data
-      const results = await fetchFakeData(lng, lat);
-      const results2 = {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [lng, lat],
-        },
-        properties: {
-          name: `Random Point #1`,
-          description: `description for Random Point #1`,
-        },
-      }
-      console.log(results2)
-      // update "random-points-data" source with new data
-      // all layers that consume the "random-points-data" data source will be updated automatically
-      map.getSource('random-points-data').setData(results2);
-    });
+  function getRoutes() {
+    const maxDistance=10;
+    axios.get("https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=" +
+      centerLat +
+      "&lon=" +
+      centerLon +
+      "&maxDistance=" +
+      maxDistance +
+      "&key=200809636-c7cbec7094518a25d825fd563e1f84ab")
+      .then(res => {
+        console.log(res.data.routes)
+      }).catch(err => {
+        console.log(err)
+      })
+  }
 
-    return () => map.remove();    
-  },[]);
-
-  // var centerLat = 40.03;
-  // var centerLon = -105.25;
-  // var firstLoad = true;
-  // mapboxgl.accessToken =
-  //   "pk.eyJ1IjoiYmVuamVuc2VuIiwiYSI6ImNrYnBqMmxjajBtbzkzMG9mcWhqNWp3eW0ifQ.P7-NNo-uJymh-G--FyC9xA";
-  // var myMap = new mapboxgl.Map({
-  //   hash: true,
-  //   zoom: 15,
-  //   center: [centerLon, centerLat],
-  //   container: "map1",
-  //   style: "mapbox://styles/mapbox/satellite-v9",
-  // });
-
-  // useEffect(()=> {
-  //   mapboxgl.accessToken = 'pk.eyJ1IjoiYmVuamVuc2VuIiwiYSI6ImNrYnBqMmxjajBtbzkzMG9mcWhqNWp3eW0ifQ.P7-NNo-uJymh-G--FyC9xA';
-  //   const map = new mapboxgl.Map({
-  //   container: 'map2',
-  //   style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-  //   center: [-74.5, 40], // starting position [lng, lat]
-  //   zoom: 9 // starting zoom
-  //   });
-
-  // })
+  
 
   return (
     <div className="mapdiv">
-      <div className="map-container" ref={mapContainerRef}/>
+      <div className="map-container" ref={mapContainerRef} />
     </div>
   )
 }

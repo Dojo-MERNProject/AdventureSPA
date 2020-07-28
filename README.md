@@ -9,6 +9,7 @@ Features
 - Set Timeline for travel & stops for the duration of the trip
 - Choose data source for adventure layers as well as each type of API
   - For example: Apple Maps vs Google Maps, OpenWeather vs WeatherUnderground
+- Import personal set of data points
 
 API's
 - Mapping:
@@ -31,3 +32,7 @@ API's
   - Waterfalls
   - Hot Springs
   - Scenic Overlooks
+- Importable Data
+  - Excel
+  - GeoJSON
+  - XML

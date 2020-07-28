@@ -3,64 +3,26 @@
   margin: 0px;
 }
 
+/* STANDARD ELEMENTS */
+table {
+  width: 100%;
+}
+th {
+  background-color: darkgray;
+  color: white;
+}
+td, th {
+  padding: 5px;
+  text-align: center;
+}
 /* .dashboardContainer{
   border: solid red;
   min-height: 600px; 
 } */
 
-.toprow, .bottomrow{
-  display: flex;
-}
-
-.toprow{
-  height: 75vh;
-}
-
-.bottomrow{
-  height: 25vh;
-}
-
-/* Borders */
-.layers, .map, .stops{
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  border:solid 1px black;
-  background-color: lightgray;
-}
-
-.layers{
-  /* border: solid black; */
-  /* display: inline-block; */
-  padding: 1%;
-  -ms-flex: 0 0 16.666667%;
-  flex: 0 0 16.666667%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 16.6667%;
-  max-width: 16.666667%;
-}
-.toggleName{
-  display: inline-block;
-}
-
-.climbingToggle{
-  height: 15px;
-  width: 15px;
-  background-color:lightskyblue;
-  border: solid lightgray;
-  display: inline-block;
-}
-
-.hikingToggle{
-  height: 15px;
-  width: 15px;
-  background-color:lightgreen;
-  border: solid lightgray;
-  display: inline-block;
-}
-
+/* MAP */
 .map{
   /* border: solid green; */
-
   -ms-flex: 0 0 58.3333333%;
   flex: 0 0 58.3333333%;
   flex-grow: 0;
@@ -69,41 +31,7 @@
   max-width: 58.3333333%;
 }
 
-.stops{
-  /* border: dashed greenyellow; */
-  /* display: inline-block; */
-  padding: 1%;
-  -ms-flex: 0 0 25%;
-  flex: 0 0 25%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 25%;
-  max-width: 25%;
-}
-
-.travel{
-  /* border: dashed green; */
-  /* display: inline-block; */
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 50%;
-  max-width: 50%;
-}
-
-.weather{
-  /* border: dashed lightskyblue; */
-  border-left: solid 1px black;
-  /* display: inline-block; */
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 50%;
-  max-width: 50%;
-}
-
+/* MAP Markers */
 .dot {
   height: 25px;
   width: 25px;
@@ -125,25 +53,9 @@
 .mapboxgl-popup {
   max-width: 400px;
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  }
-  
-  
-
-.weather {
-  padding-top: 10px;
-}
-table {
-  width: 100%;
-}
-th {
-  background-color: darkgray;
-  color: white;
-}
-td, th {
-  padding: 5px;
-  text-align: center;
 }
 
+/* NAVBAR */
 .dashboardNav {
   overflow: hidden;
   background-color: grey;
@@ -173,4 +85,125 @@ td, th {
 .dashboardNav a.active {
   background-color: #4CAF50;
   color: white;
+}
+
+
+/* ROWS */
+.toprow, .bottomrow{
+  display: flex;
+}
+
+.toprow{
+  height: 75vh;
+}
+
+.bottomrow{
+  height: 25vh;
+}
+
+
+/* SIDEBARS */
+.layers, .map, .stops{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  border:solid 1px black;
+  background-color: lightgray;
+}
+
+
+/* LAYERS SIDEBAR */
+.layers{
+  /* border: solid black; */
+  /* display: inline-block; */
+  padding: 1%;
+  -ms-flex: 0 0 16.666667%;
+  flex: 0 0 16.666667%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 16.6667%;
+  max-width: 16.666667%;
+}
+
+/* LAYER TOGGLES */
+.toggleName{
+  display: inline-block;
+}
+
+.toggle{
+  height: 15px;
+  width: 15px;
+  border: solid lightgray;
+  display: inline-block;
+}
+
+.climbingToggle{
+  background-color:lightskyblue;
+}
+
+.hikingToggle{
+  background-color:lightgreen;
+}
+
+.trailRunToggle{
+  background-color:lightskyblue;
+}
+
+.mountainBikeToggle{
+  background-color:lightgreen;
+}
+
+.waterfallToggle{
+  background-color:lightgreen;
+}
+
+.scenicOverlookToggle{
+  background-color:lightskyblue;
+}
+
+.hotSpringToggle{
+  background-color:lightgreen;
+}
+
+
+/* STOPS SIDEBAR */
+.stops{
+  /* border: dashed greenyellow; */
+  /* display: inline-block; */
+  padding: 3%;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 25%;
+  max-width: 25%;
+}
+
+
+/* TRAVEL BOTTOM BAR */
+.travel{
+  /* border: dashed green; */
+  /* display: inline-block; */
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+
+/* WEATHER BOTTOM BAR */
+.weather{
+  /* border: dashed lightskyblue; */
+  border-left: solid 1px black;
+  /* display: inline-block; */
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+.weather {
+  padding-top: 10px;
 }

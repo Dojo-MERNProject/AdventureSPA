@@ -60,7 +60,9 @@ const Map = (props) => {
         // console.log("Res Data Routes",res.data.routes)
         // Set data to the current routes
         setRoutes(res.data.routes)
-        createRouteFeatures(res.data.routes)
+        setRoutefeatures(
+          createRouteFeatures(res.data.routes)
+        )
         console.log(routefeatures)
         addRouteSource();
         console.log("Map Source added")  
@@ -71,6 +73,8 @@ const Map = (props) => {
   }
   
   //Creates dataset of current routes
+  // UPDATE: Takes an array & returns modified array
+  // UPDATE: Use function return data instead of state data
   function createRouteFeatures(currentRoutes) {
     // Initialize empty features array
     var routefeatures = [];
@@ -97,8 +101,7 @@ const Map = (props) => {
       });
     }
     console.log("Route Features",routefeatures) // Why does set state not set the array???
-    setRoutefeatures(routefeatures)
-    // return routeFeatures;
+    return routeFeatures;
   };
 
   function addRouteSource() {
@@ -110,7 +113,7 @@ const Map = (props) => {
         features: routefeatures, //Currently blank
       },
     }
-    console.log(routeFeatures)
+    console.log(`FULL Route Features ${routeFeatures}`)
     map.addSource("routeFeatures",routeFeatures)
   } 
 

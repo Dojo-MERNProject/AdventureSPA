@@ -9,6 +9,7 @@ import Weather from './Dashboard/Weather';
 const Dashboard = (props) => {
 
   // State
+  const [map,setMap] = useState({});
   const [stops,setStops]= useState();
   const [adventure,setAdventure] = useState();
 
@@ -19,6 +20,40 @@ const Dashboard = (props) => {
     // bool: if on, turn off.  if off, turn on
   }
 
+  const climbingToggleHandler = (e) =>{
+    console.log("Climbing Toggle Handler")
+    if(map.getLayer("routeFeatures")){
+      map.removeLayer("routeFeatures")
+    } else {
+      map.addLayer({
+        id: "routeFeatures",
+        type: "symbol",
+        source: "routeFeatures",
+        layout: {
+          "icon-image": "{icon}-15",
+          "icon-allow-overlap": true,
+        },
+      });
+    }
+  }
+
+  const hikingToggleHandler = (e) =>{
+    console.log("Hiking Toggle Handler")
+    if(map.getLayer("hikeFeatures")){
+      map.removeLayer("hikeFeatures")
+    } else {
+      map.addLayer({
+        id: "hikeFeatures",
+        type: "symbol",
+        source: "hikeFeatures",
+        layout: {
+          "icon-image": "{icon}-15",
+          "icon-allow-overlap": true,
+        },
+      });
+    }
+  }
+
   return (
     <div>
       <div className="dashboardContainer">
@@ -26,9 +61,16 @@ const Dashboard = (props) => {
           <div className="layers">
             <Layers
               toggleHandler = {toggleHandler}
+              climbingToggleHandler = {climbingToggleHandler}
+              hikingToggleHandler = {hikingToggleHandler}
             />
           </div>
-          <div className="map"><Map/></div>
+          <div className="map">
+            <Map
+              map = {map}
+              setMap = {setMap}
+            />
+          </div>
           <div className="stops">
             <Stops
               stops = {stops}

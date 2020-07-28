@@ -1,6 +1,6 @@
 import React from 'react';
 // NOT WORKING: import '../styles/features/checkboxes.css';
-const Layers = ({toggleHandler}) => {
+const Layers = ({toggleHandler,climbingToggleHandler,hikingToggleHandler}) => {
   return (
     <div>
       <div className="row">Activities</div>
@@ -12,11 +12,11 @@ const Layers = ({toggleHandler}) => {
                   <polyline points="5 10.75 8.5 14.25 16 6"></polyline>
                 </svg>
               </label> */}
-        <div className="toggle climbingToggle" onClick={toggleHandler}></div>
+        <div className="toggle climbingToggle" onClick={climbingToggleHandler}></div>
         <div className="toggleName">Climbing routes</div>
       </div>
       <div className="row">
-        <div className="toggle hikingToggle" onClick={toggleHandler}></div>
+        <div className="toggle hikingToggle" onClick={hikingToggleHandler}></div>
         <div className="toggleName">Hiking Trails</div>
       </div>
       <div className="row">

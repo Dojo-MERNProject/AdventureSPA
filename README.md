@@ -3,15 +3,18 @@ MERN Adventure Planning app combining all adventure project API's with weather, 
 
 
 Features
-- Ability to view all Points of interest on one map
+- View all Points of interest on one map
 - Create an "Adventure List" of "Stops" for a secific location/outdoor trip
 - See Historical weather data for more informed planning
 - Set Timeline for travel & stops for the duration of the trip
+- Choose data source for adventure layers as well as each type of API
+  - For example: Apple Maps vs Google Maps, OpenWeather vs WeatherUnderground
 
 API's
 - Mapping:
   - Mapbox
   - Google Maps
+  - Apple Maps
   - Waze
 - Adventure APIs:
   - Mountain Project
@@ -24,3 +27,7 @@ API's
   - OpenWeather
   - WeatherUnderground
   - Weather.com
+- Future Data
+  - Waterfalls
+  - Hot Springs
+  - Scenic Overlooks

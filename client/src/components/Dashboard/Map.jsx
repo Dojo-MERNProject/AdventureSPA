@@ -7,8 +7,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 // UPDATE: Create Functions that take an array & returns modified array
 // UPDATE: Use function return data instead of state data
 
-const Map = (props) => {
-  var map = {};
+const Map = ({map,setMap}) => { 
 
   const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
@@ -30,6 +29,7 @@ const Map = (props) => {
     var centerLon = mapCenter.lng;
     getRoutes(centerLat,centerLon)
     getHikes(centerLat,centerLon)
+    setMap(map)
     console.log("Map Initialized")
 
     // End of map movement Event Listener

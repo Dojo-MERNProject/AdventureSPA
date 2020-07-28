@@ -11,14 +11,18 @@ const Map = (props) => {
   var centerLat = 40.03;
   var centerLon = -105.25;
 
-  const [center, setCenter] = useState([centerLon, centerLat])
-  const [routes, setRoutes] = useState({})
+  const [center, setCenter] = useState([centerLon, centerLat]);
+  const [routes, setRoutes] = useState({});
+  const [routefeatures,setRoutefeatures] = useState({});
+  const [routeFeatures,setRouteFeatures] = useState({});
   const mapContainerRef = useRef(null);
 
+  // Initialize map & all current api data
+  // Houses map event listeners
   useEffect(() => {
 
     // Generates Base Map
-    var map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: center, // starting position [lng, lat]
@@ -26,33 +30,42 @@ const Map = (props) => {
     });
     // Adds controls to map interface
     map.addControl(new mapboxgl.NavigationControl());
-    getRoutes()
+    getRoutes(centerLat,centerLon)
     console.log("Map Initialized")
 
-
+    // End of map movement Event Listener
     map.on('moveend', function () {
-      let center = map.getCenter();
-      console.log('A moveend event occurred.');
-      getRoutes();
+      // let center2 = map.getCenter();
+      // console.log(`Get Center2: ${center2}`)
+      setCenter(map.getCenter());
+      // console.log(`This is the ${center}`)
+      centerLat = center[1];
+      centerLon = center[0];
+      // console.log(`Center Lat: ${centerLat} Center Lon: ${centerLon}`)
+      getRoutes(centerLat,centerLon);
     });
     return () => map.remove();
   }, []);
 
-  function getRoutes() {
-    // Get all route data for specific center point
+  // Get all route data for specific center point
+  function getRoutes(lat,lon) {
 
     // GET api data for routes
     const maxDistance = 10;
     const baseUrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?";
     const projectKey = "200809636-c7cbec7094518a25d825fd563e1f84ab";
     axios.get(
-      `${baseUrl}lat=${centerLat}&lon=${centerLon}&maxDistance=${maxDistance}&key=${projectKey}`)
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${projectKey}`)
       .then(res => {
-        console.log(res.data.routes)
+        // console.log("Res Data Routes",res.data.routes)
         // Set data to the current routes
         setRoutes(res.data.routes)
         createRouteFeatures(res.data.routes)
-      }).catch(err => {
+        console.log(routefeatures)
+        addRouteSource();
+        console.log("Map Source added")  
+      })
+      .catch(err => {
         console.log(err)
       })
   }
@@ -60,16 +73,10 @@ const Map = (props) => {
   //Creates dataset of current routes
   function createRouteFeatures(currentRoutes) {
     // Initialize empty features array
-    var routeFeatures = {
-      type: "geojson",
-      data: {
-        type: "FeatureCollection",
-        features: [],
-      },
-    }
+    var routefeatures = [];
     // Push route data into feature collection
     for (let i = 0; i < currentRoutes.length; i++) {
-      routeFeatures.data.features.push({
+      routefeatures.push({
         type: "Feature",
         geometry: {
           type: "Point",
@@ -89,9 +96,23 @@ const Map = (props) => {
         },
       });
     }
-    console.log("Route Features",routeFeatures)
-    return routeFeatures;
+    console.log("Route Features",routefeatures) // Why does set state not set the array???
+    setRoutefeatures(routefeatures)
+    // return routeFeatures;
   };
+
+  function addRouteSource() {
+    console.log(`routefeatures ${routefeatures}`)
+    var routeFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: routefeatures, //Currently blank
+      },
+    }
+    console.log(routeFeatures)
+    map.addSource("routeFeatures",routeFeatures)
+  } 
 
 
   return (

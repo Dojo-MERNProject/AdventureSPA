@@ -54,6 +54,10 @@ const Dashboard = (props) => {
     }
   }
 
+  const addStop = (e) =>{
+    console.log("Stop Added")
+  }
+
   return (
     <div>
       <div className="dashboardContainer">
@@ -69,6 +73,7 @@ const Dashboard = (props) => {
             <Map
               map = {map}
               setMap = {setMap}
+              addStop = {addStop}
             />
           </div>
           <div className="stops">

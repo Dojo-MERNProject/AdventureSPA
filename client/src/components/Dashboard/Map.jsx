@@ -7,7 +7,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 // UPDATE: Create Functions that take an array & returns modified array
 // UPDATE: Use function return data instead of state data
 
-const Map = ({ map, setMap }) => {
+const Map = ({ map, setMap, addStop }) => {
 
   const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
@@ -58,6 +58,8 @@ const Map = ({ map, setMap }) => {
         .setLngLat(coordinates)
         .setHTML(description)
         .addTo(map);
+
+        addStop();
     });
 
     map.on("click", "hikeFeatures", function (e) {
@@ -131,7 +133,10 @@ const Map = ({ map, setMap }) => {
           description: `<strong> ${currentRoutes[i].name}</strong>
           <p><a href="${currentRoutes[i].url}
           " target="_blank" title="Opens in a new window">
-          ${currentRoutes[i].name}</a> is an awesome crack</p>`,
+          ${currentRoutes[i].name}</a> is an awesome crack</p>
+          </p>
+            <p>
+              <a href="">Add to Adventure</a>`,
           icon: "mountain",
         },
       });
@@ -193,7 +198,10 @@ const Map = ({ map, setMap }) => {
           description: `<strong> ${currentHikes[i].name}</strong>
           <p><a href="${currentHikes[i].url}
           " target="_blank" title="Opens in a new window">
-          ${currentHikes[i].name}</a> is an awesome crack</p>`,
+          ${currentHikes[i].name}</a> is an awesome crack</p>
+          </p>
+            <p>
+              <a href="">Add to Adventure</a>`,
           icon: "park",
         },
       });
@@ -252,10 +260,18 @@ const Map = ({ map, setMap }) => {
         properties: {
           title: `${currentRuns[i].name}`,
           "marker-symbol": "monument",
-          description: `<strong> ${currentRuns[i].name}</strong>
-          <p><a href="${currentRuns[i].url}
-          " target="_blank" title="Opens in a new window">
-          ${currentRuns[i].name}</a> is an awesome crack</p>`,
+          description: `
+            <strong> ${currentRuns[i].name}</strong>
+            <p>
+              <a href="${currentRuns[i].url} "target="_blank" title="Opens in a new window">
+                ${currentRuns[i].name}
+              </a>
+               is an awesome crack
+            </p>
+            <p>
+              <a href="">Add to Adventure</a>
+            </p>`,  
+            
           icon: "harbor",
         },
       });

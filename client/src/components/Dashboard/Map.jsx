@@ -4,68 +4,57 @@ import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
+// UPDATE: Create Functions that take an array & returns modified array
+// UPDATE: Use function return data instead of state data
+
 const Map = (props) => {
   var map = {};
-  var lat = 0;
-  var lon = 0;
-  var centerLat = 40.03;
-  var centerLon = -105.25;
 
-  const [center, setCenter] = useState([centerLon, centerLat]);
-  const [routes, setRoutes] = useState({});
-  const [routefeatures,setRoutefeatures] = useState({});
-  const [routeFeatures,setRouteFeatures] = useState({});
+  const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
 
   // Initialize map & all current api data
   // Houses map event listeners
   useEffect(() => {
-
     // Generates Base Map
     map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: center, // starting position [lng, lat]
+      center: [-105.25,40.03], // starting position [lng, lat]
       zoom: 9, // starting zoom
     });
     // Adds controls to map interface
     map.addControl(new mapboxgl.NavigationControl());
+    var mapCenter = map.getCenter();
+    var centerLat = mapCenter.lat;
+    var centerLon = mapCenter.lng;
     getRoutes(centerLat,centerLon)
+    getHikes(centerLat,centerLon)
     console.log("Map Initialized")
 
     // End of map movement Event Listener
     map.on('moveend', function () {
-      // let center2 = map.getCenter();
-      // console.log(`Get Center2: ${center2}`)
-      setCenter(map.getCenter());
-      // console.log(`This is the ${center}`)
-      centerLat = center[1];
-      centerLon = center[0];
-      // console.log(`Center Lat: ${centerLat} Center Lon: ${centerLon}`)
+      mapCenter = map.getCenter();
+      centerLat = mapCenter.lat;
+      centerLon = mapCenter.lng;
+      // console.log("Center Lat: ",centerLat," Center Lon: ",centerLon)
+      removeLayers();
       getRoutes(centerLat,centerLon);
+      getHikes(centerLat,centerLon);
     });
     return () => map.remove();
   }, []);
 
   // Get all route data for specific center point
   function getRoutes(lat,lon) {
-
     // GET api data for routes
     const maxDistance = 10;
     const baseUrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?";
-    const projectKey = "200809636-c7cbec7094518a25d825fd563e1f84ab";
+    const mountainKey = "200809636-c7cbec7094518a25d825fd563e1f84ab";
     axios.get(
-      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${projectKey}`)
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${mountainKey}`)
       .then(res => {
-        // console.log("Res Data Routes",res.data.routes)
-        // Set data to the current routes
-        setRoutes(res.data.routes)
-        setRoutefeatures(
-          createRouteFeatures(res.data.routes)
-        )
-        console.log(routefeatures)
-        addRouteSource();
-        console.log("Map Source added")  
+        addRouteLayer(res.data.routes)
       })
       .catch(err => {
         console.log(err)
@@ -73,14 +62,18 @@ const Map = (props) => {
   }
   
   //Creates dataset of current routes
-  // UPDATE: Takes an array & returns modified array
-  // UPDATE: Use function return data instead of state data
-  function createRouteFeatures(currentRoutes) {
+  function addRouteLayer(currentRoutes) {
     // Initialize empty features array
-    var routefeatures = [];
+    var routeFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [],
+      },
+    }
     // Push route data into feature collection
     for (let i = 0; i < currentRoutes.length; i++) {
-      routefeatures.push({
+      routeFeatures.data.features.push({
         type: "Feature",
         geometry: {
           type: "Point",
@@ -100,23 +93,94 @@ const Map = (props) => {
         },
       });
     }
-    console.log("Route Features",routefeatures) // Why does set state not set the array???
-    return routeFeatures;
+    map.addSource("routeFeatures",routeFeatures);
+    map.addLayer({
+      id: "routeFeatures",
+      type: "symbol",
+      source: "routeFeatures",
+      layout: {
+        "icon-image": "{icon}-15",
+        "icon-allow-overlap": true,
+      },
+    });
+    console.log("Route Layer Added",routeFeatures);
   };
 
-  function addRouteSource() {
-    console.log(`routefeatures ${routefeatures}`)
-    var routeFeatures = {
+  // Get all hike data for specific center point
+  function getHikes(lat,lon) {
+
+    // GET api data for routes
+    const maxDistance = 10;
+    const baseUrl = "https://www.hikingproject.com/data/get-trails?";
+    const hikeKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${hikeKey}`)
+      .then(res => {
+        addHikeLayer(res.data.trails)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  //Creates dataset of current hikes
+  function addHikeLayer(currentHikes) {
+    // Initialize empty features array
+    var hikeFeatures = {
       type: "geojson",
       data: {
         type: "FeatureCollection",
-        features: routefeatures, //Currently blank
+        features: [],
       },
     }
-    console.log(`FULL Route Features ${routeFeatures}`)
-    map.addSource("routeFeatures",routeFeatures)
-  } 
+    // Push hike data into feature collection
+    for (let i = 0; i < currentHikes.length; i++) {
+      hikeFeatures.data.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [
+            currentHikes[i].longitude,
+            currentHikes[i].latitude,
+          ],
+        },
+        properties: {
+          title: `${currentHikes[i].name}`,
+          "marker-symbol": "monument",
+          description:`<strong> ${currentHikes[i].name}</strong>
+          <p><a href="${currentHikes[i].url}
+          " target="_blank" title="Opens in a new window">
+          ${currentHikes[i].name}</a> is an awesome crack</p>`,
+          icon: "park",
+        },
+      });
+    }
+    map.addSource("hikeFeatures",hikeFeatures);
+    map.addLayer({
+      id: "hikeFeatures",
+      type: "symbol",
+      source: "hikeFeatures",
+      layout: {
+        "icon-image": "{icon}-15",
+        "icon-allow-overlap": true,
+      },
+    });
+    console.log("Hike Layer Added",hikeFeatures);
+  };
 
+  //Removes all previous layers
+  function removeLayers() {
+    if (map.getLayer("routeFeatures")) {
+      map.removeLayer("routeFeatures");
+      map.removeSource("routeFeatures");
+    }
+    
+    if (map.getLayer("hikeFeatures")) {
+      map.removeLayer("hikeFeatures");
+      map.removeSource("hikeFeatures");
+    }
+  }
+  
 
   return (
     <div className="mapdiv">

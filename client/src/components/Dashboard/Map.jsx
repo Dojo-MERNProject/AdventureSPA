@@ -7,7 +7,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 // UPDATE: Create Functions that take an array & returns modified array
 // UPDATE: Use function return data instead of state data
 
-const Map = ({ map, setMap, stops, setStops }) => {
+const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMountains}) => {
 
   const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
@@ -88,6 +88,9 @@ const Map = ({ map, setMap, stops, setStops }) => {
     });
 
     // Add Stops
+    // setStops(
+
+    
     map.on("click", "routeFeatures", function (e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
@@ -105,8 +108,12 @@ const Map = ({ map, setMap, stops, setStops }) => {
         .setHTML(description)
         .addTo(map);
 
-      addStop(id, title)
-    });
+        setMountains("2200")
+        addStop(id, title)
+      console.log("Map",stops)
+      // return addStop(id, title)
+    })
+    // )
 
     return () => map.remove();
   }, []);
@@ -176,28 +183,27 @@ const Map = ({ map, setMap, stops, setStops }) => {
     console.log("Route Layer Added", routeFeatures);
   };
 
-  function addStop(id, title) {
-    // setStops([...stops,{
-    //   title: "Crazy Crag",
+  // function addStop(id, title) {
+    // console.log(stops)
+    // var newStops = [...stops,
+    // {
+    //   title: `${title}`,
+    //   type: "route",
+    //   style: {
+    //     color: "#336799"
+    //   }
+    // }]
+    // console.log("New Stops",newStops)
+    // setStops(newStops)
+    // setStops([{
+    //   title: `${title}`,
     //   type: "route",
     //   style: {
     //     color: "#336799"
     //   }
     // }])
-
-    // console.log(oldStops)
-    // let newStop = {
-    //   title: "Crazy Crag",
-    //   type: "route",
-    //   style: {
-    //     color: "#336799"
-    //   }
-    // };
-    // let newStops = oldStops.push(newStop);
-    // console.log("New Stops",newStops)
-    // setStops()
-    console.log(id, title)
-  }
+    // return newStops
+  // }
 
   // Get all hike data for specific center point
   function getHikes(lat, lon) {
@@ -432,6 +438,8 @@ const Map = ({ map, setMap, stops, setStops }) => {
 
   return (
     <div className="mapdiv">
+      <div><p>{adventure}</p></div>
+      {/* <p>{mountains}</p> */}
       <div className="map-container" ref={mapContainerRef} />
     </div>
   )

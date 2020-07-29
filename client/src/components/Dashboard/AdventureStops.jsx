@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-const Stops = ({stops,setStops}) => {
+const AdventureStops = ({stops,setStops,mountains}) => {
 
   useEffect(()=>{
     //Create new adventure list to add stops to
@@ -21,7 +21,6 @@ const Stops = ({stops,setStops}) => {
         {
           stops.map((stop,i)=>
           <section key={i}>
-
             <li style={stop.style}>{stop.title}</li>
             <p>
              <span className="stopDateTime"> Start </span>
@@ -39,8 +38,20 @@ const Stops = ({stops,setStops}) => {
       </ol>
       <br/>
       <button>Create Adventure</button>
+      <div>
+        <ol>
+          {/* {
+            mountains.map((mountain,i) =>
+            <section>
+              <p key={i}>{mountain.nam}</p>
+            </section>
+            )
+          } */}
+          {/* <p style={{height: "100px"}} >{mountains}</p> */}
+        </ol>
+      </div>
     </div>
   )
 }
 
-export default Stops;
+export default AdventureStops;

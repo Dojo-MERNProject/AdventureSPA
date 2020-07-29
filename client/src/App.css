@@ -54,3 +54,15 @@
     transform: rotate(360deg);
   }
 }
+
+.dashboardContainer{
+  color: black;
+}
+
+.toggleName{
+  color: black;
+}
+
+.row{
+  color: black;
+}

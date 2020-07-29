@@ -70,7 +70,7 @@ td, th {
 
 .dashboardNav a {
   float: left;
-  color: #f2f2f2;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -106,7 +106,7 @@ td, th {
 .layers, .map, .stops{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   border:solid 1px black;
-  background-color: lightgray;
+  background-color: white;
 }
 
 
@@ -126,6 +126,7 @@ td, th {
 /* LAYER TOGGLES */
 .toggleName{
   display: inline-block;
+  color: black;
 }
 
 .toggle{

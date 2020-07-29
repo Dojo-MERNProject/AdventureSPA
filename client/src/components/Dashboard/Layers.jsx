@@ -1,8 +1,17 @@
 import React from 'react';
 // NOT WORKING: import '../styles/features/checkboxes.css';
-const Layers = ({toggleHandler,climbingToggleHandler,hikingToggleHandler}) => {
+const Layers = ({
+  sidebarHandler,toggleHandler,
+  climbingToggleHandler,climbingToggleStyle,
+  hikingToggleHandler, hikingToggleStyle}) => {
   return (
     <div>
+      <div className="sidebarToggle" 
+           id="layers"
+           className="icon"
+           onClick={sidebarHandler}>
+            &equiv;
+      </div>
       <div className="row">Activities</div>
       <div className="row">
         {/* Checkbox Not Working/}
@@ -12,11 +21,11 @@ const Layers = ({toggleHandler,climbingToggleHandler,hikingToggleHandler}) => {
                   <polyline points="5 10.75 8.5 14.25 16 6"></polyline>
                 </svg>
               </label> */}
-        <div className="toggle climbingToggle" onClick={climbingToggleHandler}></div>
+        <div className="toggle climbingToggle" style={climbingToggleStyle} onClick={climbingToggleHandler}></div>
         <div className="toggleName">Climbing routes</div>
       </div>
       <div className="row">
-        <div className="toggle hikingToggle" onClick={hikingToggleHandler}></div>
+        <div className="toggle hikingToggle" style={hikingToggleStyle} onClick={hikingToggleHandler}></div>
         <div className="toggleName">Hiking Trails</div>
       </div>
       <div className="row">

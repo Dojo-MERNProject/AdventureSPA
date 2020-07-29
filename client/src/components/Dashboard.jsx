@@ -46,11 +46,20 @@ const Dashboard = (props) => {
 
   // Style States
   const [climbingToggleStyle, setClimbingToggleStyle] = useState({
+    // background: url(Mountain.svg),
     backgroundColor: "#336799",
     border: "solid gray 1px"
   });
   const [hikingToggleStyle, setHikingToggleStyle] = useState({
     backgroundColor: "#578F3F",
+    border: "solid gray 1px"
+  });
+  const [powderToggleStyle, setPowderToggleStyle] = useState({
+    backgroundColor: "#6D95BF",
+    border: "solid gray 1px"
+  });
+  const [trailRunToggleStyle, setTrailRunToggleStyle] = useState({
+    backgroundColor: "#C16026",
     border: "solid gray 1px"
   });
 
@@ -129,6 +138,56 @@ const Dashboard = (props) => {
     }
   }
 
+  const powderToggleHandler = (e) => {
+    console.log("Powder Toggle Handler")
+    if (map.getLayer("powderFeatures")) {
+      map.removeLayer("powderFeatures")
+      setPowderToggleStyle({
+        backgroundColor: "transparent",
+        border: "solid gray 1px"
+      })
+    } else {
+      map.addLayer({
+        id: "powderFeatures",
+        type: "symbol",
+        source: "powderFeatures",
+        layout: {
+          "icon-image": "{icon}-15",
+          "icon-allow-overlap": true,
+        },
+      });
+      setPowderToggleStyle({
+        backgroundColor: "#6D95BF",
+        border: "solid gray 1px"
+      })
+    }
+  }
+
+  const trailRunToggleHandler = (e) => {
+    console.log("Trail Run Toggle Handler")
+    if (map.getLayer("trailRunFeatures")) {
+      map.removeLayer("trailRunFeatures")
+      setTrailRunToggleStyle({
+        backgroundColor: "transparent",
+        border: "solid gray 1px"
+      })
+    } else {
+      map.addLayer({
+        id: "trailRunFeatures",
+        type: "symbol",
+        source: "trailRunFeatures",
+        layout: {
+          "icon-image": "{icon}-15",
+          "icon-allow-overlap": true,
+        },
+      });
+      setTrailRunToggleStyle({
+        backgroundColor: "#C16026",
+        border: "solid gray 1px"
+      })
+    }
+  }
+
   const addStop = (e) => {
     console.log("Stop Added")
   }
@@ -144,6 +203,10 @@ const Dashboard = (props) => {
               climbingToggleStyle={climbingToggleStyle}
               hikingToggleHandler={hikingToggleHandler}
               hikingToggleStyle={hikingToggleStyle}
+              powderToggleHandler={powderToggleHandler}
+              powderToggleStyle={powderToggleStyle}
+              trailRunToggleHandler={trailRunToggleHandler}
+              trailRunToggleStyle={trailRunToggleStyle}
               sidebarHandler = {sidebarHandler}
             />
           </div>

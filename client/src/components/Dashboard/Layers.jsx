@@ -3,7 +3,9 @@ import React from 'react';
 const Layers = ({
   sidebarHandler,toggleHandler,
   climbingToggleHandler,climbingToggleStyle,
-  hikingToggleHandler, hikingToggleStyle}) => {
+  hikingToggleHandler, hikingToggleStyle,
+  powderToggleHandler, powderToggleStyle,
+  trailRunToggleHandler,trailRunToggleStyle}) => {
   return (
     <div>
       <div className="sidebarToggle" 
@@ -29,7 +31,11 @@ const Layers = ({
         <div className="toggleName">Hiking Trails</div>
       </div>
       <div className="row">
-        <div className="toggle trailRunToggle" onClick={toggleHandler}></div>
+        <div className="toggle powderToggle" style={powderToggleStyle} onClick={powderToggleHandler}></div>
+        <div className="toggleName">Powder Runs</div>
+      </div>
+      <div className="row">
+        <div className="toggle trailRunToggle" style={trailRunToggleStyle} onClick={trailRunToggleHandler}></div>
         <div className="toggleName">Trail Runs</div>
       </div>
       <div className="row">

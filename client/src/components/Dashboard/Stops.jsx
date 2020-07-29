@@ -22,7 +22,7 @@ const Stops = ({stops,setStops}) => {
           stops.map((stop,i)=>
           <section key={i}>
 
-            <li style={stop.style}>{stop.name}</li>
+            <li style={stop.style}>{stop.title}</li>
             <p>
              <span className="stopDateTime"> Start </span>
               <input type="date"/>

@@ -127,46 +127,69 @@ td, th {
 .toggleName{
   display: inline-block;
   color: black;
+  margin: 3px;
 }
 
 .toggle{
-  height: 15px;
-  width: 15px;
-  border: solid lightgray;
+  height: 11px;
+  width: 11px;
+  
   display: inline-block;
+  margin-right: 5px;
 }
 
 .climbingToggle{
   background: url(Mountain.svg);
   /* background-color:lightskyblue; */
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
 }
 
 .hikingToggle{
   background-color:lightgreen;
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
 }
 
 .trailRunToggle{
   background-color: #C16026;
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
 }
 
 .mountainBikeToggle{
   background-color:lightgreen;
-  border: "solid gray 1px";
+  
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
 }
 
 .waterfallToggle{
   background-color:#45B782;
   border: "solid gray 1px";
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
 }
 
 .scenicOverlookToggle{
   background-color:#EBC627;
   border: "solid gray 1px";
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
 }
 
 .hotSpringToggle{
   background-color:#80BACC;
   border: "solid gray 1px";
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
 }
 
 

@@ -1,10 +1,17 @@
 import React from 'react';
 // NOT WORKING: import '../styles/features/checkboxes.css';
 const Layers = ({
-  toggleHandler,climbingToggleHandler,climbingToggleStyle,
+  sidebarHandler,toggleHandler,
+  climbingToggleHandler,climbingToggleStyle,
   hikingToggleHandler, hikingToggleStyle}) => {
   return (
     <div>
+      <div className="sidebarToggle" 
+           id="layers"
+           className="icon"
+           onClick={sidebarHandler}>
+            &equiv;
+      </div>
       <div className="row">Activities</div>
       <div className="row">
         {/* Checkbox Not Working/}

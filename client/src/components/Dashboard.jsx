@@ -8,10 +8,49 @@ import Weather from './Dashboard/Weather';
 
 const Dashboard = (props) => {
 
-  // State
+  //State
   const [map,setMap] = useState({});
-  const [stops,setStops]= useState();
+  const [stops,setStops]= useState([
+    {
+      name:"Crazy Crag",
+      type:"route",
+      style:{
+        color:"#336799"
+      }
+    },
+    {
+      name:"Speed Mountain",
+      type:"hike",
+      style:{
+        color:"#8F181C"
+      }
+    },
+    {
+      name:"Trail Loop",
+      type:"run",
+      style:{
+        color:"#C06028"
+      }
+    },
+    {
+      name:"Big Hike",
+      type:"hike",
+      style:{
+        color:"#578F3F"
+      }
+    }
+  ]);
   const [adventure,setAdventure] = useState();
+
+  // Style States
+  const [climbingToggleStyle,setClimbingToggleStyle] = useState({
+    backgroundColor:"#336799",
+    border: "solid gray 1px"
+  });
+  const [hikingToggleStyle,setHikingToggleStyle] = useState({
+    backgroundColor:"#578F3F",
+    border: "solid gray 1px"
+  });
 
   // Handlers
   const toggleHandler = (e) =>{
@@ -24,6 +63,9 @@ const Dashboard = (props) => {
     console.log("Climbing Toggle Handler")
     if(map.getLayer("routeFeatures")){
       map.removeLayer("routeFeatures")
+      setClimbingToggleStyle({
+        backgroundColor:"transparent",
+        border: "solid gray 1px"})
     } else {
       map.addLayer({
         id: "routeFeatures",
@@ -34,6 +76,9 @@ const Dashboard = (props) => {
           "icon-allow-overlap": true,
         },
       });
+      setClimbingToggleStyle({
+        backgroundColor:"#336799",
+        border: "solid gray 1px"})
     }
   }
 
@@ -41,6 +86,9 @@ const Dashboard = (props) => {
     console.log("Hiking Toggle Handler")
     if(map.getLayer("hikeFeatures")){
       map.removeLayer("hikeFeatures")
+      setHikingToggleStyle({
+        backgroundColor:"transparent",
+        border: "solid gray 1px"})
     } else {
       map.addLayer({
         id: "hikeFeatures",
@@ -51,6 +99,9 @@ const Dashboard = (props) => {
           "icon-allow-overlap": true,
         },
       });
+      setHikingToggleStyle({
+        backgroundColor:"#578F3F",
+        border: "solid gray 1px"})
     }
   }
 
@@ -66,7 +117,9 @@ const Dashboard = (props) => {
             <Layers
               toggleHandler = {toggleHandler}
               climbingToggleHandler = {climbingToggleHandler}
+              climbingToggleStyle = {climbingToggleStyle}
               hikingToggleHandler = {hikingToggleHandler}
+              hikingToggleStyle = {hikingToggleStyle}
             />
           </div>
           <div className="map">

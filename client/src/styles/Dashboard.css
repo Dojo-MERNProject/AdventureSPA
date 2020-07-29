@@ -177,6 +177,10 @@ td, th {
   max-width: 25%;
 }
 
+.stopDateTime{
+  width: 40px; /* Not doing anything to <span> */
+}
+
 
 /* TRAVEL BOTTOM BAR */
 .travel{

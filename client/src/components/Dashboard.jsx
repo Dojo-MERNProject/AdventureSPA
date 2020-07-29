@@ -50,7 +50,7 @@ const Dashboard = (props) => {
     }
   ])
   const [adventure, setAdventure] = useState("Open");
-  const [layersOpen, setLayersOpen] = useState(true);
+  const [layersOpen, setLayersOpen] = useState(false);
   const [spotsOpen, setSpotsOpen] = useState(true);
 
   // Style States
@@ -220,7 +220,7 @@ const Dashboard = (props) => {
     <div>
       <div className="dashboardContainer">
         <div className="toprow">
-          <div className="layers">
+          <div className={`layers ${layersOpen ? 'open' : 'closed'}`}>
             <AdventureLayers
               toggleHandler={toggleHandler}
               climbingToggleHandler={climbingToggleHandler}

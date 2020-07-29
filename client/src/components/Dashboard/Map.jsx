@@ -7,7 +7,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 // UPDATE: Create Functions that take an array & returns modified array
 // UPDATE: Use function return data instead of state data
 
-const Map = ({ map, setMap, addStop }) => {
+const Map = ({ map, setMap, stops, setStops }) => {
 
   const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
@@ -19,8 +19,8 @@ const Map = ({ map, setMap, addStop }) => {
     map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-105.25, 40.03], // starting position [lng, lat]
-      zoom: 9, // starting zoom
+      center: [-105.456, 39.88], // starting position [lng, lat]
+      zoom: 10, // starting zoom
     });
     // Adds controls to map interface
     map.addControl(new mapboxgl.NavigationControl());
@@ -47,7 +47,7 @@ const Map = ({ map, setMap, addStop }) => {
       getTrailRuns(centerLat, centerLon);
     });
 
-    map.on("click", "routeFeatures", function (e) {
+    map.on("mouseenter", "routeFeatures", function (e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
 
@@ -61,11 +61,9 @@ const Map = ({ map, setMap, addStop }) => {
         .setLngLat(coordinates)
         .setHTML(description)
         .addTo(map);
-
-      addStop();
     });
 
-    map.on("click", "hikeFeatures", function (e) {
+    map.on("mouseenter", "hikeFeatures", function (e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
@@ -77,7 +75,7 @@ const Map = ({ map, setMap, addStop }) => {
         .addTo(map);
     });
 
-    map.on("click", "powderFeatures", function (e) {
+    map.on("mouseenter", "powderFeatures", function (e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
@@ -89,6 +87,26 @@ const Map = ({ map, setMap, addStop }) => {
         .addTo(map);
     });
 
+    // Add Stops
+    map.on("click", "routeFeatures", function (e) {
+      var coordinates = e.features[0].geometry.coordinates.slice();
+      var description = e.features[0].properties.description;
+      var title = e.features[0].properties.title;
+      var id = e.features[0].properties.id;
+
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+
+      addStop(id, title)
+    });
 
     return () => map.remove();
   }, []);
@@ -131,6 +149,7 @@ const Map = ({ map, setMap, addStop }) => {
           ],
         },
         properties: {
+          id: `${currentRoutes[i].id}`,
           title: `${currentRoutes[i].name}`,
           "marker-symbol": "monument",
           description: `<strong> ${currentRoutes[i].name}</strong>
@@ -156,6 +175,29 @@ const Map = ({ map, setMap, addStop }) => {
     });
     console.log("Route Layer Added", routeFeatures);
   };
+
+  function addStop(id, title) {
+    // setStops([...stops,{
+    //   title: "Crazy Crag",
+    //   type: "route",
+    //   style: {
+    //     color: "#336799"
+    //   }
+    // }])
+
+    // console.log(oldStops)
+    // let newStop = {
+    //   title: "Crazy Crag",
+    //   type: "route",
+    //   style: {
+    //     color: "#336799"
+    //   }
+    // };
+    // let newStops = oldStops.push(newStop);
+    // console.log("New Stops",newStops)
+    // setStops()
+    console.log(id, title)
+  }
 
   // Get all hike data for specific center point
   function getHikes(lat, lon) {

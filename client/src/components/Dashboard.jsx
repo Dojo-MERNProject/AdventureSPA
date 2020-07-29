@@ -12,34 +12,34 @@ const Dashboard = (props) => {
   const [map, setMap] = useState({});
   const [stops, setStops] = useState([
     {
-      name: "Crazy Crag",
+      title: "Crazy Crag",
       type: "route",
       style: {
         color: "#336799"
       }
     },
     {
-      name: "Speed Mountain",
+      title: "Speed Mountain",
       type: "hike",
       style: {
         color: "#8F181C"
       }
     },
     {
-      name: "Trail Loop",
+      title: "Trail Loop",
       type: "run",
       style: {
         color: "#C06028"
       }
     },
     {
-      name: "Big Hike",
+      title: "Big Hike",
       type: "hike",
       style: {
         color: "#578F3F"
       }
     }
-  ]);
+  ])
   const [adventure, setAdventure] = useState();
   const [layersOpen, setLayersOpen] = useState(true);
   const [spotsOpen, setSpotsOpen] = useState(true);
@@ -214,7 +214,7 @@ const Dashboard = (props) => {
             <Map
               map={map}
               setMap={setMap}
-              addStop={addStop}
+              stops={setStops}
             />
           </div>
           <div className="stops">

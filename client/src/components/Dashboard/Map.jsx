@@ -29,6 +29,8 @@ const Map = ({ map, setMap, addStop }) => {
     var centerLon = mapCenter.lng;
     getRoutes(centerLat, centerLon)
     getHikes(centerLat, centerLon)
+    getPowder(centerLat, centerLon);
+    getTrailRuns(centerLat, centerLon);
     setMap(map)
     console.log("Map Initialized")
 
@@ -42,6 +44,7 @@ const Map = ({ map, setMap, addStop }) => {
       getRoutes(centerLat, centerLon);
       getHikes(centerLat, centerLon);
       getPowder(centerLat, centerLon);
+      getTrailRuns(centerLat, centerLon);
     });
 
     map.on("click", "routeFeatures", function (e) {
@@ -59,7 +62,7 @@ const Map = ({ map, setMap, addStop }) => {
         .setHTML(description)
         .addTo(map);
 
-        addStop();
+      addStop();
     });
 
     map.on("click", "hikeFeatures", function (e) {
@@ -164,6 +167,7 @@ const Map = ({ map, setMap, addStop }) => {
     axios.get(
       `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${hikeKey}`)
       .then(res => {
+        // console.log("Hikes API: ",res) //Identical to Trail Run
         addHikeLayer(res.data.trails)
       })
       .catch(err => {
@@ -270,8 +274,8 @@ const Map = ({ map, setMap, addStop }) => {
             </p>
             <p>
               <a href="">Add to Adventure</a>
-            </p>`,  
-            
+            </p>`,
+
           icon: "harbor",
         },
       });
@@ -289,6 +293,77 @@ const Map = ({ map, setMap, addStop }) => {
     console.log("Powder Layer Added", powderFeatures);
   };
 
+  // Get all trail run data for specific center point
+  function getTrailRuns(lat, lon) {
+
+    // GET api data for routes
+    const maxDistance = 10;
+    const baseUrl = "https://www.trailrunproject.com/data/get-trails?";
+    const trailRunKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${trailRunKey}`)
+      .then(res => {
+        // console.log("Trail Runs API: ",res) // Identical to Hikes
+        addTrailRunLayer(res.data.trails)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  //Creates dataset of current hikes
+  function addTrailRunLayer(currentTrailRuns) {
+    // Initialize empty features array
+    var trailRunFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [],
+      },
+    }
+    // Push hike data into feature collection
+    for (let i = 0; i < currentTrailRuns.length; i++) {
+      trailRunFeatures.data.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [
+            currentTrailRuns[i].longitude,
+            currentTrailRuns[i].latitude,
+          ],
+        },
+        properties: {
+          title: `${currentTrailRuns[i].name}`,
+          "marker-symbol": "monument",
+          description: `
+            <strong> ${currentTrailRuns[i].name}</strong>
+            <p>
+              <a href="${currentTrailRuns[i].url} "target="_blank" title="Opens in a new window">
+                ${currentTrailRuns[i].name}
+              </a>
+               is an awesome trail run
+            </p>
+            <p>
+              <a href="">Add to Adventure</a>
+            </p>`,
+
+          icon: "attraction",
+        },
+      });
+    }
+    map.addSource("trailRunFeatures", trailRunFeatures);
+    map.addLayer({
+      id: "trailRunFeatures",
+      type: "symbol",
+      source: "trailRunFeatures",
+      layout: {
+        "icon-image": "{icon}-15",
+        "icon-allow-overlap": true,
+      },
+    });
+    console.log("Trail Run Layer Added", trailRunFeatures);
+  };
+
   //Removes all previous layers
   function removeLayers() {
     if (map.getLayer("routeFeatures")) {
@@ -304,6 +379,11 @@ const Map = ({ map, setMap, addStop }) => {
     if (map.getLayer("powderFeatures")) {
       map.removeLayer("powderFeatures");
       map.removeSource("powderFeatures");
+    }
+
+    if (map.getLayer("trailRunFeatures")) {
+      map.removeLayer("trailRunFeatures");
+      map.removeSource("trailRunFeatures");
     }
   }
 

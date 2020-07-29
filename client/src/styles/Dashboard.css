@@ -136,7 +136,8 @@ td, th {
 }
 
 .climbingToggle{
-  background-color:lightskyblue;
+  background: url(Mountain.svg);
+  /* background-color:lightskyblue; */
 }
 
 .hikingToggle{
@@ -144,23 +145,27 @@ td, th {
 }
 
 .trailRunToggle{
-  background-color:lightskyblue;
+  background-color: #C16026;
 }
 
 .mountainBikeToggle{
   background-color:lightgreen;
+  border: "solid gray 1px";
 }
 
 .waterfallToggle{
-  background-color:lightgreen;
+  background-color:#45B782;
+  border: "solid gray 1px";
 }
 
 .scenicOverlookToggle{
-  background-color:lightskyblue;
+  background-color:#EBC627;
+  border: "solid gray 1px";
 }
 
 .hotSpringToggle{
-  background-color:lightgreen;
+  background-color:#80BACC;
+  border: "solid gray 1px";
 }
 
 

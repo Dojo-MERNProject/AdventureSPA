@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Layers from './Dashboard/Layers';
+import AdventureLayers from './Dashboard/AdventureLayers';
 import Map from './Dashboard/Map';
-import Stops from './Dashboard/Stops';
+import AdventureStops from './Dashboard/AdventureStops';
 import Travel from './Dashboard/Travel';
 import Weather from './Dashboard/Weather';
 
@@ -10,6 +10,15 @@ const Dashboard = (props) => {
 
   //State
   const [map, setMap] = useState({});
+  const [mountains,setMountains] = useState(
+    {
+    nam: "The Mountain",
+    tie: "of CO"
+  },
+  {
+    nam: "The Mountain2",
+    tie: "of CA"
+  })
   const [stops, setStops] = useState([
     {
       title: "Crazy Crag",
@@ -40,7 +49,7 @@ const Dashboard = (props) => {
       }
     }
   ])
-  const [adventure, setAdventure] = useState();
+  const [adventure, setAdventure] = useState("Open");
   const [layersOpen, setLayersOpen] = useState(true);
   const [spotsOpen, setSpotsOpen] = useState(true);
 
@@ -84,11 +93,13 @@ const Dashboard = (props) => {
 
   const toggleHandler = (e) => {
     console.log("Toggle Handler")
+    
     //Toggle this.layer on and off
     // bool: if on, turn off.  if off, turn on
   }
 
   const climbingToggleHandler = (e) => {
+    console.log("Dashboard Stops:", stops)
     console.log("Climbing Toggle Handler")
     if (map.getLayer("routeFeatures")) {
       map.removeLayer("routeFeatures")
@@ -188,7 +199,20 @@ const Dashboard = (props) => {
     }
   }
 
-  const addStop = (e) => {
+  const addStop = (id,title) => {
+    console.log(stops)
+    var newStops = [...stops,
+    {
+      title: `${title}`,
+      type: "route",
+      style: {
+        color: "#336799"
+      }
+    }]
+    console.log("New Stops",newStops)
+    setStops(newStops)
+    setAdventure("Closed")
+    console.log(adventure)
     console.log("Stop Added")
   }
 
@@ -197,7 +221,7 @@ const Dashboard = (props) => {
       <div className="dashboardContainer">
         <div className="toprow">
           <div className="layers">
-            <Layers
+            <AdventureLayers
               toggleHandler={toggleHandler}
               climbingToggleHandler={climbingToggleHandler}
               climbingToggleStyle={climbingToggleStyle}
@@ -208,17 +232,24 @@ const Dashboard = (props) => {
               trailRunToggleHandler={trailRunToggleHandler}
               trailRunToggleStyle={trailRunToggleStyle}
               sidebarHandler = {sidebarHandler}
+
+              mountains = {mountains}
             />
           </div>
           <div className="map">
             <Map
               map={map}
               setMap={setMap}
-              stops={setStops}
+              stops={stops}
+              setStops = {setStops}
+              addStop = {addStop}
+              adventure = {adventure}
+              mountains = {mountains}
+              setMountains = {setMountains}
             />
           </div>
           <div className="stops">
-            <Stops
+            <AdventureStops
               stops={stops}
               setStops={setStops}
               sidebarHandler = {sidebarHandler}

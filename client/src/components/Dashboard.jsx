@@ -213,11 +213,11 @@ const Dashboard = (props) => {
     }
   }
 
-  const addStop = (id,title) => {
+  const addStop = (routeid,routetitle) => {
     console.log(stops)
     var newStops = [...stops,
     {
-      title: `${title}`,
+      title: `${routetitle}`,
       type: "route",
       style: {
         color: "#336799"

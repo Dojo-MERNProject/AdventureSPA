@@ -94,8 +94,8 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
     map.on("click", "routeFeatures", function (e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
-      var title = e.features[0].properties.title;
-      var id = e.features[0].properties.id;
+      var routetitle = e.features[0].properties.title;
+      var routeid = e.features[0].properties.id;
 
       // Ensure that if the map is zoomed out such that multiple
       // copies of the feature are visible, the popup appears
@@ -109,7 +109,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         .addTo(map);
 
         setMountains("2200")
-        addStop(id, title)
+        addStop(routeid, routetitle)
       console.log("Map",stops)
       // return addStop(id, title)
     })

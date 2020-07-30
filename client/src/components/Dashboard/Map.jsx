@@ -7,7 +7,6 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 // UPDATE: Create Functions that take an array & returns modified array
 // UPDATE: Use function return data instead of state data
 
-<<<<<<< HEAD
 const Map = ({
   map,
   setMap,
@@ -17,11 +16,9 @@ const Map = ({
   adventure,
   mountains,
   setMountains,
+  leftSidebarHandler,
+  rightSidebarHandler,
 }) => {
-=======
-const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMountains, leftSidebarHandler, rightSidebarHandler}) => {
-
->>>>>>> a4daf78bf06ecb519c2813c4ad2857e2c5e93015
   const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
 
@@ -218,7 +215,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
   // }])
   // return newStops
   // }
-  const { deleteProject } = props;
+  // const { deleteProject } = props;
   // Get all hike data for specific center point
   function getHikes(lat, lon) {
     // GET api data for routes
@@ -470,7 +467,6 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
             </p>`,
 
           icon: "pitch",
-          
         },
       });
     }
@@ -517,13 +513,12 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
 
   return (
     <div className="mapdiv">
-<<<<<<< HEAD
       <div>
-        <p>{adventure}</p>
+        <p>
+          <span onClick={leftSidebarHandler}>{adventure}</span> |{" "}
+          <span onClick={rightSidebarHandler}>Sesame</span>
+        </p>
       </div>
-=======
-      <div><p><span onClick={leftSidebarHandler}>{adventure}</span> | <span onClick={rightSidebarHandler}>Sesame</span></p></div>
->>>>>>> a4daf78bf06ecb519c2813c4ad2857e2c5e93015
       {/* <p>{mountains}</p> */}
       <div className="map-container" ref={mapContainerRef} />
     </div>

@@ -4,9 +4,9 @@ import {Router} from '@reach/router'; // Needs the {} to export
 
 // CSS
 import './App.css'; // Only need to import here
-// import '../src/styles/Dashboard.css';
+import '../src/styles/Dashboard.css';
 import './styles/features/mapbox.css'
-import './styles/Dashboard-mobile.css';
+// import './styles/Dashboard-mobile.css';
 
 
 // Components

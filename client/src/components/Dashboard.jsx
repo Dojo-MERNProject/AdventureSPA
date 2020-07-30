@@ -53,6 +53,8 @@ const Dashboard = (props) => {
   const [layersOpen, setLayersOpen] = useState(false);
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
+  const [leftDrawer, setLeftDrawer] = useState(false);
+  const [rightDrawer, setRightDrawer] = useState(false);
   const [spotsOpen, setSpotsOpen] = useState(true);
 
   // Style States
@@ -98,6 +100,18 @@ const Dashboard = (props) => {
     console.log(`${e.target.id}`)
     setRightOpen(!rightOpen);
     console.log("leftOpen State: ", rightOpen)
+  }
+
+  const leftDrawerHandler = (e) => {
+    console.log(`${e.target.id}`)
+    setLeftDrawer(!leftDrawer);
+    console.log("leftOpen State: ", leftDrawer)
+  }
+
+  const rightDrawerHandler = (e) => {
+    console.log(`${e.target.id}`)
+    setRightDrawer(!rightDrawer);
+    console.log("leftOpen State: ", rightDrawer)
   }
 
   // function changeCSSLayers (layersOpenState) {
@@ -262,6 +276,8 @@ const Dashboard = (props) => {
               setMountains = {setMountains}
               leftSidebarHandler = {leftSidebarHandler}
               rightSidebarHandler = {rightSidebarHandler}
+              leftDrawerHandler= {leftDrawerHandler}
+              rightDrawerHandler= {rightDrawerHandler}
             />
           </div>
           <div className={`stops ${rightOpen ? 'rightopen' : 'rightclosed'}`}>
@@ -272,13 +288,13 @@ const Dashboard = (props) => {
           </div>
         </div>
         <div className="bottomrow">
-          <div className="travel">
+          <div className={`travel ${leftDrawer ? 'ldraweropen' : 'ldrawerclosed'}`}>
             <Travel
               stops={stops}
               setStops={setStops}
             />
           </div>
-          <div className="weather"><Weather /></div>
+          <div className={`weather ${rightDrawer ? 'rdraweropen' : 'rdrawerclosed'}`}><Weather /></div>
         </div>
       </div>
     </div>

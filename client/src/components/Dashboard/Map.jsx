@@ -7,7 +7,7 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 // UPDATE: Create Functions that take an array & returns modified array
 // UPDATE: Use function return data instead of state data
 
-const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMountains}) => {
+const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMountains, leftSidebarHandler, rightSidebarHandler}) => {
 
   const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
@@ -438,7 +438,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
 
   return (
     <div className="mapdiv">
-      <div><p>{adventure}</p></div>
+      <div><p><span onClick={leftSidebarHandler}>{adventure}</span> | <span onClick={rightSidebarHandler}>Sesame</span></p></div>
       {/* <p>{mountains}</p> */}
       <div className="map-container" ref={mapContainerRef} />
     </div>

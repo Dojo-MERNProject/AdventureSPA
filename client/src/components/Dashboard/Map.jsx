@@ -254,7 +254,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
           </p>
             <p>
               <a href="">Add to Adventure</a>`,
-          icon: "park",
+          icon: "shoe",
         },
       });
     }
@@ -324,7 +324,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
               <a href="">Add to Adventure</a>
             </p>`,
 
-          icon: "harbor",
+          icon: "park-alt1",
         },
       });
     }
@@ -395,7 +395,8 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
               <a href="">Add to Adventure</a>
             </p>`,
 
-          icon: "attraction",
+          icon: "pitch",
+          
         },
       });
     }

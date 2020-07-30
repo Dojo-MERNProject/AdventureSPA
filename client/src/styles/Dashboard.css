@@ -117,12 +117,18 @@ td, th {
   /* border: solid black; */
   /* display: inline-block; */
   padding: 1%;
-  -ms-flex: 0 0 16.666667%;
-  flex: 0 0 16.666667%;
+  /* -ms-flex: 0 0 16.666667%; */
+  /* flex: 0 0 16.666667%; */
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 16.6667%;
-  max-width: 16.666667%;
+  /* flex-basis: 16.6667%; */
+  width: 10%;
+  transition: width 1s;
+}
+
+.open{
+  width: 40%;
+
 }
 
 /* LAYER TOGGLES */

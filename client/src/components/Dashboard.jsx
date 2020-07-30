@@ -51,6 +51,8 @@ const Dashboard = (props) => {
   ])
   const [adventure, setAdventure] = useState("Open");
   const [layersOpen, setLayersOpen] = useState(false);
+  const [leftOpen, setLeftOpen] = useState(false);
+  const [rightOpen, setRightOpen] = useState(false);
   const [spotsOpen, setSpotsOpen] = useState(true);
 
   // Style States
@@ -73,18 +75,30 @@ const Dashboard = (props) => {
   });
 
   // Handlers
-  const sidebarHandler = (e) => {
-    // Reference: https://davidde.github.io/sidebars/
-    // Github: https://github.com/davidde/sidebars
-    // SASS: https://sass-lang.com/guide
-    console.log("Sidebar Handler")
+  // const sideBarHandler = (e) => {
+  //   // Reference: https://davidde.github.io/sidebars/
+  //   // Github: https://github.com/davidde/sidebars
+  //   // SASS: https://sass-lang.com/guide
+  //   console.log("Sidebar Handler")
+  //   console.log(`${e.target.id}`)
+  //   // changeCSSLayers(layersOpen);
+  //   setLeftOpen(!leftOpen);
+  //   console.log("layersOpen State: ",leftOpen)
+  //   let layersOpenClass = leftOpen? 'open' : 'closed'; //let is within this scope
+  //   console.log("layersOpen CSS: ",leftOpen)
+  // };
+
+  const leftSidebarHandler = (e) => {
     console.log(`${e.target.id}`)
-    // changeCSSLayers(layersOpen);
-    setLayersOpen(!layersOpen);
-    console.log("layersOpen State: ",layersOpen)
-    let layersOpenClass = layersOpen? 'open' : 'closed'; //let is within this scope
-    console.log("layersOpen CSS: ",layersOpenClass)
-  };
+    setLeftOpen(!leftOpen);
+    console.log("leftOpen State: ", leftOpen)
+  }
+
+  const rightSidebarHandler = (e) => {
+    console.log(`${e.target.id}`)
+    setRightOpen(!rightOpen);
+    console.log("leftOpen State: ", rightOpen)
+  }
 
   // function changeCSSLayers (layersOpenState) {
   //   let layersOpenClass = layersOpenState? 'open' : 'closed'; //let is within this scope
@@ -220,7 +234,7 @@ const Dashboard = (props) => {
     <div>
       <div className="dashboardContainer">
         <div className="toprow">
-          <div className={`layers ${layersOpen ? 'open' : 'closed'}`}>
+          <div className={`layers ${leftOpen ? 'leftopen' : 'leftclosed'}`}>
             <AdventureLayers
               toggleHandler={toggleHandler}
               climbingToggleHandler={climbingToggleHandler}
@@ -231,7 +245,7 @@ const Dashboard = (props) => {
               powderToggleStyle={powderToggleStyle}
               trailRunToggleHandler={trailRunToggleHandler}
               trailRunToggleStyle={trailRunToggleStyle}
-              sidebarHandler = {sidebarHandler}
+              leftSidebarHandler = {leftSidebarHandler}
 
               mountains = {mountains}
             />
@@ -246,13 +260,14 @@ const Dashboard = (props) => {
               adventure = {adventure}
               mountains = {mountains}
               setMountains = {setMountains}
+              leftSidebarHandler = {leftSidebarHandler}
+              rightSidebarHandler = {rightSidebarHandler}
             />
           </div>
-          <div className="stops">
+          <div className={`stops ${rightOpen ? 'rightopen' : 'rightclosed'}`}>
             <AdventureStops
               stops={stops}
               setStops={setStops}
-              sidebarHandler = {sidebarHandler}
             />
           </div>
         </div>

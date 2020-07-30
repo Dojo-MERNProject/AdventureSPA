@@ -3,107 +3,36 @@
   margin: 0px;
 }
 
+/* STANDARD ELEMENTS */
+table {
+  width: 100%;
+}
+th {
+  background-color: darkgray;
+  color: white;
+}
+td, th {
+  padding: 5px;
+  text-align: center;
+}
 /* .dashboardContainer{
   border: solid red;
   min-height: 600px; 
 } */
 
-.toprow, .bottomrow{
-  display: flex;
-}
-
-.toprow{
-  height: 75vh;
-}
-
-.bottomrow{
-  height: 25vh;
-}
-
-/* Borders */
-.layers, .map, .stops{
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  border:solid 1px black;
-  background-color: lightgray;
-}
-
-.layers{
-  /* border: solid black; */
-  /* display: inline-block; */
-  padding: 1%;
-  -ms-flex: 0 0 16.666667%;
-  flex: 0 0 16.666667%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 16.6667%;
-  max-width: 16.666667%;
-}
-.toggleName{
-  display: inline-block;
-}
-
-.climbingToggle{
-  height: 15px;
-  width: 15px;
-  background-color:lightskyblue;
-  border: solid lightgray;
-  display: inline-block;
-}
-
-.hikingToggle{
-  height: 15px;
-  width: 15px;
-  background-color:lightgreen;
-  border: solid lightgray;
-  display: inline-block;
-}
-
+/* MAP */
 .map{
   /* border: solid green; */
-
   -ms-flex: 0 0 58.3333333%;
   flex: 0 0 58.3333333%;
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 58.3333333%;
   max-width: 58.3333333%;
+  
 }
 
-.stops{
-  /* border: dashed greenyellow; */
-  /* display: inline-block; */
-  padding: 1%;
-  -ms-flex: 0 0 25%;
-  flex: 0 0 25%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 25%;
-  max-width: 25%;
-}
-
-.travel{
-  /* border: dashed green; */
-  /* display: inline-block; */
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 50%;
-  max-width: 50%;
-}
-
-.weather{
-  /* border: dashed lightskyblue; */
-  border-left: solid 1px black;
-  /* display: inline-block; */
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 50%;
-  max-width: 50%;
-}
-
+/* MAP Markers */
 .dot {
   height: 25px;
   width: 25px;
@@ -125,25 +54,10 @@
 .mapboxgl-popup {
   max-width: 400px;
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  }
   
-  
-
-.weather {
-  padding-top: 10px;
-}
-table {
-  width: 100%;
-}
-th {
-  background-color: darkgray;
-  color: white;
-}
-td, th {
-  padding: 5px;
-  text-align: center;
 }
 
+/* NAVBAR */
 .dashboardNav {
   overflow: hidden;
   background-color: grey;
@@ -158,11 +72,11 @@ td, th {
 
 .dashboardNav a {
   float: left;
-  color: #f2f2f2;
+  color: black;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .dashboardNav a:hover {
@@ -173,4 +87,179 @@ td, th {
 .dashboardNav a.active {
   background-color: #4CAF50;
   color: white;
+}
+
+
+/* ROWS */
+.toprow, .bottomrow{
+  display: flex;
+}
+
+.toprow{
+  height: 75vh;
+}
+
+.bottomrow{
+  height: 25vh;
+}
+
+
+/* SIDEBARS */
+.layers, .map, .stops{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border:solid 1px black;
+  background-color: white;
+}
+
+
+/* LAYERS SIDEBAR */
+.layers{
+  /* border: solid black; */
+  /* display: inline-block; */
+  padding: 1%;
+  -ms-flex: 0 0 16.666667%;
+  flex: 0 0 16.666667%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 16.6667%;
+  max-width: 16.666667%;
+}
+
+/* LAYER TOGGLES */
+.toggleName{
+  display: inline-block;
+  color: black;
+  margin: 3px;
+  
+}
+
+.toggle{
+  height: 11px;
+  width: 11px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.climbingToggle{
+  background: url(Mountain.svg);
+  /* background-color:lightskyblue; */
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+.hikingToggle{
+  background-color:lightgreen;
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+.trailRunToggle{
+  background-color: #C16026;
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+.mountainBikeToggle{
+  background-color:lightgreen;
+  
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+.waterfallToggle{
+  background-color:#45B782;
+  border: "solid gray 1px";
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+.scenicOverlookToggle{
+  background-color:#EBC627;
+  border: "solid gray 1px";
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+.hotSpringToggle{
+  background-color:#80BACC;
+  border: "solid gray 1px";
+  height: 11px;
+  width: 11px;
+  margin-right: 5px;
+}
+
+
+/* STOPS SIDEBAR */
+.stops{
+  /* border: dashed greenyellow; */
+  /* display: inline-block; */
+  padding: 3%;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 25%;
+  max-width: 25%;
+  
+}
+
+h3{
+  margin-bottom: 10px;
+}
+
+p{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+
+
+.stopDateTime{
+  width: 40px; /* Not doing anything to <span> */
+  
+}
+
+
+/* TRAVEL BOTTOM BAR */
+.travel{
+  /* border: dashed green; */
+  /* display: inline-block; */
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+
+/* WEATHER BOTTOM BAR */
+.weather{
+  /* border: dashed lightskyblue; */
+  border-left: solid 1px black;
+  /* display: inline-block; */
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 50%;
+  max-width: 50%;
+}
+
+.weather {
+  padding-top: 10px;
+}
+
+button{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: white;
+  padding: 3px;
+  border-radius: 4px;
+  
 }

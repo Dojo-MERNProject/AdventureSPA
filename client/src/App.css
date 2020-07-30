@@ -54,3 +54,22 @@
     transform: rotate(360deg);
   }
 }
+
+.dashboardContainer{
+  color: black;
+}
+
+.toggleName{
+  color: black;
+}
+
+.row{
+  color: black;
+  font-weight: bold;
+  margin-top: 5px;
+  
+}
+
+.rows{
+  margin-top: 10px;
+}

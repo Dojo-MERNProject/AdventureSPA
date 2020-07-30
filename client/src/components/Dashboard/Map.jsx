@@ -1,97 +1,438 @@
-import React, {useEffect,useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 import mapboxgl from 'mapbox-gl';
-import fetchFakeData from './data/fetchFakeData'
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
-const Map = (props) => {
+// UPDATE: Create Functions that take an array & returns modified array
+// UPDATE: Use function return data instead of state data
 
-  const [center,setCenter] = useState([-74.5, 40])
+const Map = ({ map, setMap, stops, setStops }) => {
+
+  const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
 
+  // Initialize map & all current api data
+  // Houses map event listeners
   useEffect(() => {
-    const map = new mapboxgl.Map({
+    // Generates Base Map
+    map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: center, // starting position [lng, lat]
-      zoom: 9, // starting zoom
+      center: [-105.456, 39.88], // starting position [lng, lat]
+      zoom: 10, // starting zoom
+    });
+    // Adds controls to map interface
+    map.addControl(new mapboxgl.NavigationControl());
+    var mapCenter = map.getCenter();
+    var centerLat = mapCenter.lat;
+    var centerLon = mapCenter.lng;
+    getRoutes(centerLat, centerLon)
+    getHikes(centerLat, centerLon)
+    getPowder(centerLat, centerLon);
+    getTrailRuns(centerLat, centerLon);
+    setMap(map)
+    console.log("Map Initialized")
+
+    // End of map movement Event Listener
+    map.on('moveend', function () {
+      mapCenter = map.getCenter();
+      centerLat = mapCenter.lat;
+      centerLon = mapCenter.lng;
+      // console.log("Center Lat: ",centerLat," Center Lon: ",centerLon)
+      removeLayers();
+      getRoutes(centerLat, centerLon);
+      getHikes(centerLat, centerLon);
+      getPowder(centerLat, centerLon);
+      getTrailRuns(centerLat, centerLon);
     });
 
-    map.on('load', () => {
-      // add the data source for new a feature collection with no features
-      map.addSource('random-points-data', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [],
-        },
-      });
-      // now add the layer, and reference the data source above by name
-      map.addLayer({
-        id: 'random-points-layer',
-        source: 'random-points-data',
-        type: 'symbol',
-        layout: {
-          // full list of icons here: https://labs.mapbox.com/maki-icons
-          'icon-image': 'bakery-15', // this will put little croissants on our map
-          'icon-padding': 0,
-          'icon-allow-overlap': true,
-        },
-      });
+    map.on("mouseenter", "routeFeatures", function (e) {
+      var coordinates = e.features[0].geometry.coordinates.slice();
+      var description = e.features[0].properties.description;
+
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
     });
 
-    map.on('moveend', async () => {
-      // get new center coordinates
-      const { lng, lat } = map.getCenter();
-      // fetch new data
-      const results = await fetchFakeData(lng, lat);
-      const results2 = {
-        type: 'Feature',
+    map.on("mouseenter", "hikeFeatures", function (e) {
+      var coordinates = e.features[0].geometry.coordinates.slice();
+      var description = e.features[0].properties.description;
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+    });
+
+    map.on("mouseenter", "powderFeatures", function (e) {
+      var coordinates = e.features[0].geometry.coordinates.slice();
+      var description = e.features[0].properties.description;
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+    });
+
+    // Add Stops
+    map.on("click", "routeFeatures", function (e) {
+      var coordinates = e.features[0].geometry.coordinates.slice();
+      var description = e.features[0].properties.description;
+      var title = e.features[0].properties.title;
+      var id = e.features[0].properties.id;
+
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      }
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+
+      addStop(id, title)
+    });
+
+    return () => map.remove();
+  }, []);
+
+  // Get all route data for specific center point
+  function getRoutes(lat, lon) {
+    // GET api data for routes
+    const maxDistance = 10;
+    const baseUrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?";
+    const mountainKey = "200809636-c7cbec7094518a25d825fd563e1f84ab";
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${mountainKey}`)
+      .then(res => {
+        addRouteLayer(res.data.routes)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  //Creates dataset of current routes
+  function addRouteLayer(currentRoutes) {
+    // Initialize empty features array
+    var routeFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [],
+      },
+    }
+    // Push route data into feature collection
+    for (let i = 0; i < currentRoutes.length; i++) {
+      routeFeatures.data.features.push({
+        type: "Feature",
         geometry: {
-          type: 'Point',
-          coordinates: [lng, lat],
+          type: "Point",
+          coordinates: [
+            currentRoutes[i].longitude,
+            currentRoutes[i].latitude,
+          ],
         },
         properties: {
-          name: `Random Point #1`,
-          description: `description for Random Point #1`,
+          id: `${currentRoutes[i].id}`,
+          title: `${currentRoutes[i].name}`,
+          "marker-symbol": "monument",
+          description: `<strong> ${currentRoutes[i].name}</strong>
+          <p><a href="${currentRoutes[i].url}
+          " target="_blank" title="Opens in a new window">
+          ${currentRoutes[i].name}</a> is an awesome crack</p>
+          </p>
+            <p>
+              <a href="">Add to Adventure</a>`,
+          icon: "mountain",
         },
-      }
-      console.log(results2)
-      // update "random-points-data" source with new data
-      // all layers that consume the "random-points-data" data source will be updated automatically
-      map.getSource('random-points-data').setData(results2);
+      });
+    }
+    map.addSource("routeFeatures", routeFeatures);
+    map.addLayer({
+      id: "routeFeatures",
+      type: "symbol",
+      source: "routeFeatures",
+      layout: {
+        "icon-image": "{icon}-15",
+        "icon-allow-overlap": true,
+      },
     });
+    console.log("Route Layer Added", routeFeatures);
+  };
 
-    return () => map.remove();    
-  },[]);
+  function addStop(id, title) {
+    // setStops([...stops,{
+    //   title: "Crazy Crag",
+    //   type: "route",
+    //   style: {
+    //     color: "#336799"
+    //   }
+    // }])
 
-  // var centerLat = 40.03;
-  // var centerLon = -105.25;
-  // var firstLoad = true;
-  // mapboxgl.accessToken =
-  //   "pk.eyJ1IjoiYmVuamVuc2VuIiwiYSI6ImNrYnBqMmxjajBtbzkzMG9mcWhqNWp3eW0ifQ.P7-NNo-uJymh-G--FyC9xA";
-  // var myMap = new mapboxgl.Map({
-  //   hash: true,
-  //   zoom: 15,
-  //   center: [centerLon, centerLat],
-  //   container: "map1",
-  //   style: "mapbox://styles/mapbox/satellite-v9",
-  // });
+    // console.log(oldStops)
+    // let newStop = {
+    //   title: "Crazy Crag",
+    //   type: "route",
+    //   style: {
+    //     color: "#336799"
+    //   }
+    // };
+    // let newStops = oldStops.push(newStop);
+    // console.log("New Stops",newStops)
+    // setStops()
+    console.log(id, title)
+  }
 
-  // useEffect(()=> {
-  //   mapboxgl.accessToken = 'pk.eyJ1IjoiYmVuamVuc2VuIiwiYSI6ImNrYnBqMmxjajBtbzkzMG9mcWhqNWp3eW0ifQ.P7-NNo-uJymh-G--FyC9xA';
-  //   const map = new mapboxgl.Map({
-  //   container: 'map2',
-  //   style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-  //   center: [-74.5, 40], // starting position [lng, lat]
-  //   zoom: 9 // starting zoom
-  //   });
+  // Get all hike data for specific center point
+  function getHikes(lat, lon) {
 
-  // })
+    // GET api data for routes
+    const maxDistance = 10;
+    const baseUrl = "https://www.hikingproject.com/data/get-trails?";
+    const hikeKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${hikeKey}`)
+      .then(res => {
+        // console.log("Hikes API: ",res) //Identical to Trail Run
+        addHikeLayer(res.data.trails)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  //Creates dataset of current hikes
+  function addHikeLayer(currentHikes) {
+    // Initialize empty features array
+    var hikeFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [],
+      },
+    }
+    // Push hike data into feature collection
+    for (let i = 0; i < currentHikes.length; i++) {
+      hikeFeatures.data.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [
+            currentHikes[i].longitude,
+            currentHikes[i].latitude,
+          ],
+        },
+        properties: {
+          title: `${currentHikes[i].name}`,
+          "marker-symbol": "monument",
+          description: `<strong> ${currentHikes[i].name}</strong>
+          <p><a href="${currentHikes[i].url}
+          " target="_blank" title="Opens in a new window">
+          ${currentHikes[i].name}</a> is an awesome crack</p>
+          </p>
+            <p>
+              <a href="">Add to Adventure</a>`,
+          icon: "park",
+        },
+      });
+    }
+    map.addSource("hikeFeatures", hikeFeatures);
+    map.addLayer({
+      id: "hikeFeatures",
+      type: "symbol",
+      source: "hikeFeatures",
+      layout: {
+        "icon-image": "{icon}-15",
+        "icon-allow-overlap": true,
+      },
+    });
+    console.log("Hike Layer Added", hikeFeatures);
+  };
+
+  // Get all ski/snowboard run data for specific center point
+  function getPowder(lat, lon) {
+
+    // GET api data for routes
+    const maxDistance = 10;
+    const baseUrl = "https://www.powderproject.com/data/get-trails?";
+    const powderKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${powderKey}`)
+      .then(res => {
+        addPowderLayer(res.data.trails)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  //Creates dataset of current hikes
+  function addPowderLayer(currentRuns) {
+    // Initialize empty features array
+    var powderFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [],
+      },
+    }
+    // Push hike data into feature collection
+    for (let i = 0; i < currentRuns.length; i++) {
+      powderFeatures.data.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [
+            currentRuns[i].longitude,
+            currentRuns[i].latitude,
+          ],
+        },
+        properties: {
+          title: `${currentRuns[i].name}`,
+          "marker-symbol": "monument",
+          description: `
+            <strong> ${currentRuns[i].name}</strong>
+            <p>
+              <a href="${currentRuns[i].url} "target="_blank" title="Opens in a new window">
+                ${currentRuns[i].name}
+              </a>
+               is an awesome crack
+            </p>
+            <p>
+              <a href="">Add to Adventure</a>
+            </p>`,
+
+          icon: "harbor",
+        },
+      });
+    }
+    map.addSource("powderFeatures", powderFeatures);
+    map.addLayer({
+      id: "powderFeatures",
+      type: "symbol",
+      source: "powderFeatures",
+      layout: {
+        "icon-image": "{icon}-15",
+        "icon-allow-overlap": true,
+      },
+    });
+    console.log("Powder Layer Added", powderFeatures);
+  };
+
+  // Get all trail run data for specific center point
+  function getTrailRuns(lat, lon) {
+
+    // GET api data for routes
+    const maxDistance = 10;
+    const baseUrl = "https://www.trailrunproject.com/data/get-trails?";
+    const trailRunKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${trailRunKey}`)
+      .then(res => {
+        // console.log("Trail Runs API: ",res) // Identical to Hikes
+        addTrailRunLayer(res.data.trails)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  //Creates dataset of current hikes
+  function addTrailRunLayer(currentTrailRuns) {
+    // Initialize empty features array
+    var trailRunFeatures = {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [],
+      },
+    }
+    // Push hike data into feature collection
+    for (let i = 0; i < currentTrailRuns.length; i++) {
+      trailRunFeatures.data.features.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [
+            currentTrailRuns[i].longitude,
+            currentTrailRuns[i].latitude,
+          ],
+        },
+        properties: {
+          title: `${currentTrailRuns[i].name}`,
+          "marker-symbol": "monument",
+          description: `
+            <strong> ${currentTrailRuns[i].name}</strong>
+            <p>
+              <a href="${currentTrailRuns[i].url} "target="_blank" title="Opens in a new window">
+                ${currentTrailRuns[i].name}
+              </a>
+               is an awesome trail run
+            </p>
+            <p>
+              <a href="">Add to Adventure</a>
+            </p>`,
+
+          icon: "attraction",
+        },
+      });
+    }
+    map.addSource("trailRunFeatures", trailRunFeatures);
+    map.addLayer({
+      id: "trailRunFeatures",
+      type: "symbol",
+      source: "trailRunFeatures",
+      layout: {
+        "icon-image": "{icon}-15",
+        "icon-allow-overlap": true,
+      },
+    });
+    console.log("Trail Run Layer Added", trailRunFeatures);
+  };
+
+  //Removes all previous layers
+  function removeLayers() {
+    if (map.getLayer("routeFeatures")) {
+      map.removeLayer("routeFeatures");
+      map.removeSource("routeFeatures");
+    }
+
+    if (map.getLayer("hikeFeatures")) {
+      map.removeLayer("hikeFeatures");
+      map.removeSource("hikeFeatures");
+    }
+
+    if (map.getLayer("powderFeatures")) {
+      map.removeLayer("powderFeatures");
+      map.removeSource("powderFeatures");
+    }
+
+    if (map.getLayer("trailRunFeatures")) {
+      map.removeLayer("trailRunFeatures");
+      map.removeSource("trailRunFeatures");
+    }
+  }
+
 
   return (
     <div className="mapdiv">
-      <div className="map-container" ref={mapContainerRef}/>
+      <div className="map-container" ref={mapContainerRef} />
     </div>
   )
 }

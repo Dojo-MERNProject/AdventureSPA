@@ -77,7 +77,7 @@ const Map = (props) => {
         centerLat +
         "&lon=" +
         centerLon +
-        "&key=200809636-c7cbec7094518a25d825fd563e1f84ab",
+        // "&key=200809636-c7cbec7094518a25d825fd563e1f84ab",
       function (climbs) {
         console.log(climbs);
 

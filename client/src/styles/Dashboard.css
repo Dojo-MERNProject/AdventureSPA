@@ -1,7 +1,6 @@
 *{
   padding: 0px;
   margin: 0px;
-  box-sizing: border-box;
 }
 
 /* STANDARD ELEMENTS */
@@ -51,7 +50,7 @@ td, th {
 .rightDrawerArrow{
   position: absolute;
   z-index: 5;
-  bottom: 85px;
+  top: 585px;
   right: 200px;
   font-weight: bold;
 }
@@ -59,7 +58,7 @@ td, th {
 .leftDrawerArrow{
   position: absolute;
   z-index: 5;
-  bottom: 85px;
+  top: 585px;
   left: 200px;
   font-weight: bold;
 }

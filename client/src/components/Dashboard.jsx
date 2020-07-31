@@ -52,6 +52,8 @@ const Dashboard = (props) => {
   const [layersOpen, setLayersOpen] = useState(false);
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
+  const [leftDrawer, setLeftDrawer] = useState(false);
+  const [rightDrawer, setRightDrawer] = useState(false);
   const [spotsOpen, setSpotsOpen] = useState(true);
 
   // Style States
@@ -97,6 +99,18 @@ const Dashboard = (props) => {
     console.log(`${e.target.id}`);
     setRightOpen(!rightOpen);
     console.log("leftOpen State: ", rightOpen);
+  };
+
+  const leftDrawerHandler = (e) => {
+    console.log(`${e.target.id}`);
+    setLeftDrawer(!leftDrawer);
+    console.log("leftOpen State: ", leftDrawer);
+  };
+
+  const rightDrawerHandler = (e) => {
+    console.log(`${e.target.id}`);
+    setRightDrawer(!rightDrawer);
+    console.log("leftOpen State: ", rightDrawer);
   };
 
   // function changeCSSLayers (layersOpenState) {

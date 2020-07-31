@@ -9,7 +9,7 @@ import "./styles/features/mapbox.css";
 import "./styles/Dashboard-mobile.css";
 
 // Components
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./cogit push origin <branchname>mponents/Dashboard";
 import Map from "./components/Dashboard/Map";
 
 function App() {

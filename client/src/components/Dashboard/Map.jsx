@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
-import mapboxgl from "mapbox-gl";
+import mapboxgl from 'mapbox-gl';
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 // UPDATE: Create Functions that take an array & returns modified array
@@ -19,7 +19,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
     // Generates Base Map
     map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: 'mapbox://styles/mapbox/streets-v11',
       center: [-105.456, 39.88], // starting position [lng, lat]
       zoom: 10, // starting zoom
     });
@@ -28,16 +28,15 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
     var mapCenter = map.getCenter();
     var centerLat = mapCenter.lat;
     var centerLon = mapCenter.lng;
-    getRoutes(centerLat, centerLon);
-    getHikes(centerLat, centerLon);
+    getRoutes(centerLat, centerLon)
+    getHikes(centerLat, centerLon)
     getPowder(centerLat, centerLon);
     getTrailRuns(centerLat, centerLon);
-    getMTBtrails(centerLat, centerLon);
-    setMap(map);
-    console.log("Map Initialized");
+    setMap(map)
+    console.log("Map Initialized")
 
     // End of map movement Event Listener
-    map.on("moveend", function () {
+    map.on('moveend', function () {
       mapCenter = map.getCenter();
       centerLat = mapCenter.lat;
       centerLon = mapCenter.lng;
@@ -47,7 +46,6 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
       getHikes(centerLat, centerLon);
       getPowder(centerLat, centerLon);
       getTrailRuns(centerLat, centerLon);
-      getMTBtrails(centerLat, centerLon);
     });
 
     map.on("mouseenter", "routeFeatures", function (e) {
@@ -93,11 +91,12 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
     // Add Stops
     // setStops(
 
+    
     map.on("click", "routeFeatures", function (e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
-      var routetitle = e.features[0].properties.title;
-      var routeid = e.features[0].properties.id;
+      var title = e.features[0].properties.title;
+      var id = e.features[0].properties.id;
 
       // Ensure that if the map is zoomed out such that multiple
       // copies of the feature are visible, the popup appears
@@ -110,12 +109,11 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         .setHTML(description)
         .addTo(map);
 
-      setMountains("2200");
-      addStop(id, title);
-      console.log("Map", stops);
-
+        setMountains("2200")
+        addStop(id, title)
+      console.log("Map",stops)
       // return addStop(id, title)
-    });
+    })
     // )
 
     return () => map.remove();
@@ -125,19 +123,16 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
   function getRoutes(lat, lon) {
     // GET api data for routes
     const maxDistance = 10;
-    const baseUrl =
-      "https://www.mountainproject.com/data/get-routes-for-lat-lon?";
+    const baseUrl = "https://www.mountainproject.com/data/get-routes-for-lat-lon?";
     const mountainKey = "200809636-c7cbec7094518a25d825fd563e1f84ab";
-    axios
-      .get(
-        `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${mountainKey}`
-      )
-      .then((res) => {
-        addRouteLayer(res.data.routes);
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${mountainKey}`)
+      .then(res => {
+        addRouteLayer(res.data.routes)
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   //Creates dataset of current routes
@@ -149,14 +144,17 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         type: "FeatureCollection",
         features: [],
       },
-    };
+    }
     // Push route data into feature collection
     for (let i = 0; i < currentRoutes.length; i++) {
       routeFeatures.data.features.push({
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [currentRoutes[i].longitude, currentRoutes[i].latitude],
+          coordinates: [
+            currentRoutes[i].longitude,
+            currentRoutes[i].latitude,
+          ],
         },
         properties: {
           id: `${currentRoutes[i].id}`,
@@ -184,47 +182,46 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
       },
     });
     console.log("Route Layer Added", routeFeatures);
-  }
+  };
 
   // function addStop(id, title) {
-  // console.log(stops)
-  // var newStops = [...stops,
-  // {
-  //   title: `${title}`,
-  //   type: "route",
-  //   style: {
-  //     color: "#336799"
-  //   }
-  // }]
-  // console.log("New Stops",newStops)
-  // setStops(newStops)
-  // setStops([{
-  //   title: `${title}`,
-  //   type: "route",
-  //   style: {
-  //     color: "#336799"
-  //   }
-  // }])
-  // return newStops
+    // console.log(stops)
+    // var newStops = [...stops,
+    // {
+    //   title: `${title}`,
+    //   type: "route",
+    //   style: {
+    //     color: "#336799"
+    //   }
+    // }]
+    // console.log("New Stops",newStops)
+    // setStops(newStops)
+    // setStops([{
+    //   title: `${title}`,
+    //   type: "route",
+    //   style: {
+    //     color: "#336799"
+    //   }
+    // }])
+    // return newStops
   // }
-  const { deleteProject } = props;
+
   // Get all hike data for specific center point
   function getHikes(lat, lon) {
+
     // GET api data for routes
     const maxDistance = 10;
     const baseUrl = "https://www.hikingproject.com/data/get-trails?";
     const hikeKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
-    axios
-      .get(
-        `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${hikeKey}`
-      )
-      .then((res) => {
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${hikeKey}`)
+      .then(res => {
         // console.log("Hikes API: ",res) //Identical to Trail Run
-        addHikeLayer(res.data.trails);
+        addHikeLayer(res.data.trails)
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   //Creates dataset of current hikes
@@ -236,14 +233,17 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         type: "FeatureCollection",
         features: [],
       },
-    };
+    }
     // Push hike data into feature collection
     for (let i = 0; i < currentHikes.length; i++) {
       hikeFeatures.data.features.push({
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [currentHikes[i].longitude, currentHikes[i].latitude],
+          coordinates: [
+            currentHikes[i].longitude,
+            currentHikes[i].latitude,
+          ],
         },
         properties: {
           title: `${currentHikes[i].name}`,
@@ -255,7 +255,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
           </p>
             <p>
               <a href="">Add to Adventure</a>`,
-          icon: "shoe",
+          icon: "park",
         },
       });
     }
@@ -270,87 +270,23 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
       },
     });
     console.log("Hike Layer Added", hikeFeatures);
-  }
-  //////////////////
-  function getMTBtrails(lat, lon) {
-    // GET api data for routes
-    const maxDistance = 10;
-    const baseUrl = "https://www.mtbproject.com/data/get-trails?";
-    const hikeKey = "200855965-f5b93008c41ab368123b8de0d0324891";
-    axios
-      .get(
-        `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${hikeKey}`
-      )
-      .then((res) => {
-        // console.log("Hikes API: ",res) //Identical to Trail Run
-        addMTBLayer(res.data.trails);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  };
 
-  //Creates dataset of current mtbs
-  function addMTBLayer(currentMtbs) {
-    // Initialize empty features array
-    var mtbFeatures = {
-      type: "geojson",
-      data: {
-        type: "FeatureCollection",
-        features: [],
-      },
-    };
-    // Push hike data into feature collection
-    for (let i = 0; i < currentMtbs.length; i++) {
-      mtbFeatures.data.features.push({
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [currentMtbs[i].longitude, currentMtbs[i].latitude],
-        },
-        properties: {
-          title: `${currentMtbs[i].name}`,
-          "marker-symbol": "monument",
-          description: `<strong> ${currentMtbs[i].name}</strong>
-          <p><a href="${currentMtbs[i].url}
-          " target="_blank" title="Opens in a new window">
-          ${currentMtbs[i].name}</a> is an awesome crack</p>
-          </p>
-            <p>
-              <a href="">Add to Adventure</a>`,
-          icon: "bicycle",
-        },
-      });
-    }
-    map.addSource("mtbFeatures", mtbFeatures);
-    map.addLayer({
-      id: "mtbFeatures",
-      type: "symbol",
-      source: "mtbFeatures",
-      layout: {
-        "icon-image": "{icon}-15",
-        "icon-allow-overlap": true,
-      },
-    });
-    console.log("Mountain Bike Layer Added", mtbFeatures);
-  }
-  //////////////
   // Get all ski/snowboard run data for specific center point
   function getPowder(lat, lon) {
+
     // GET api data for routes
     const maxDistance = 10;
     const baseUrl = "https://www.powderproject.com/data/get-trails?";
     const powderKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
-    axios
-      .get(
-        `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${powderKey}`
-      )
-      .then((res) => {
-        addPowderLayer(res.data.trails);
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${powderKey}`)
+      .then(res => {
+        addPowderLayer(res.data.trails)
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   //Creates dataset of current hikes
@@ -362,14 +298,17 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         type: "FeatureCollection",
         features: [],
       },
-    };
+    }
     // Push hike data into feature collection
     for (let i = 0; i < currentRuns.length; i++) {
       powderFeatures.data.features.push({
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [currentRuns[i].longitude, currentRuns[i].latitude],
+          coordinates: [
+            currentRuns[i].longitude,
+            currentRuns[i].latitude,
+          ],
         },
         properties: {
           title: `${currentRuns[i].name}`,
@@ -386,7 +325,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
               <a href="">Add to Adventure</a>
             </p>`,
 
-          icon: "park-alt1",
+          icon: "harbor",
         },
       });
     }
@@ -401,25 +340,24 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
       },
     });
     console.log("Powder Layer Added", powderFeatures);
-  }
+  };
 
   // Get all trail run data for specific center point
   function getTrailRuns(lat, lon) {
+
     // GET api data for routes
     const maxDistance = 10;
     const baseUrl = "https://www.trailrunproject.com/data/get-trails?";
     const trailRunKey = "110170838-33c2b1ad523334aa9bf56f585ae8a1b6";
-    axios
-      .get(
-        `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${trailRunKey}`
-      )
-      .then((res) => {
+    axios.get(
+      `${baseUrl}lat=${lat}&lon=${lon}&maxDistance=${maxDistance}&key=${trailRunKey}`)
+      .then(res => {
         // console.log("Trail Runs API: ",res) // Identical to Hikes
-        addTrailRunLayer(res.data.trails);
+        addTrailRunLayer(res.data.trails)
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   //Creates dataset of current hikes
@@ -431,7 +369,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         type: "FeatureCollection",
         features: [],
       },
-    };
+    }
     // Push hike data into feature collection
     for (let i = 0; i < currentTrailRuns.length; i++) {
       trailRunFeatures.data.features.push({
@@ -458,8 +396,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
               <a href="">Add to Adventure</a>
             </p>`,
 
-          icon: "pitch",
-          
+          icon: "attraction",
         },
       });
     }
@@ -474,7 +411,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
       },
     });
     console.log("Trail Run Layer Added", trailRunFeatures);
-  }
+  };
 
   //Removes all previous layers
   function removeLayers() {
@@ -497,21 +434,20 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
       map.removeLayer("trailRunFeatures");
       map.removeSource("trailRunFeatures");
     }
-
-    if (map.getLayer("mtbFeatures")) {
-      map.removeLayer("mtbFeatures");
-      map.removeSource("mtbFeatures");
-    }
   }
+
 
   return (
     <div className="mapdiv">
-
-      <div><p><span onClick={leftSidebarHandler}>{adventure}</span> | <span onClick={rightSidebarHandler}>Sesame</span> | <span onClick={leftDrawerHandler}>Left</span> | <span onClick={rightDrawerHandler}>Right</span></p></div>
       {/* <p>{mountains}</p> */}
+      
+      <div className="leftSideArrow" onClick={leftSidebarHandler}>&lt;</div>
+      <div className="rightSideArrow" onClick={rightSidebarHandler}>&gt;</div>
+      <div  className="leftDrawerArrow" onClick={leftDrawerHandler}>&#x22C1;</div>
+      <div className="rightDrawerArrow" onClick={rightDrawerHandler}>&#x22C1;</div>
       <div className="map-container" ref={mapContainerRef} />
     </div>
-  );
-};
+  )
+}
 
 export default Map;

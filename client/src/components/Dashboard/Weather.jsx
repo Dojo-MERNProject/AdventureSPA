@@ -2,7 +2,10 @@ import React from 'react';
 
 const Weather = (props) => {
   return (
-    <div></div>
+    <div>
+
+
+    </div>
   )
 }
 

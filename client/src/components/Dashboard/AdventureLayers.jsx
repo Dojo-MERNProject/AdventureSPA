@@ -1,6 +1,6 @@
 import React from 'react';
 // NOT WORKING: import '../styles/features/checkboxes.css';
-const Layers = ({
+const AdventureLayers = ({
   leftSidebarHandler,toggleHandler,
   climbingToggleHandler,climbingToggleStyle,
   hikingToggleHandler, hikingToggleStyle,
@@ -60,4 +60,4 @@ const Layers = ({
   )
 }
 
-export default Layers;
+export default AdventureLayers;

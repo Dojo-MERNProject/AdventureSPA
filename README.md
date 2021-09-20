@@ -12,8 +12,8 @@ MERN Adventure Planning app combining all adventure project API's with weather, 
   - Start Point: ("/Dashboard") Index.js/App.js/Dashboard
 
 ## Git Repository
-Local: Yes
-Remote: https://github.com/Dojo-MERNProject/AdventureSPA (Private)
+- Local: Yes
+- Remote: https://github.com/Dojo-MERNProject/AdventureSPA (Private)
 
 ## Stack
 - Node
@@ -76,4 +76,4 @@ Not Current
   - XML
 
 
-Migrated to new project at Merge 19 & Commit 61
+- Migrated to new project at Merge 19 & Commit 61

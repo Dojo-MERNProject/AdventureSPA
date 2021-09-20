@@ -1,8 +1,46 @@
 # AdventureSPA
 MERN Adventure Planning app combining all adventure project API's with weather, travel &amp; scenic sites
 
+## Basic Info
+- Current Status: Not Operational
+- Reason: Map not loading
+- Discussion: May be from missing API Key
+- Next Steps: Find reason for Map not working
+- Server: 8000
+- Database: AdventureSPA
+- Front-End: 3000 (Default)
+  - Start Point: ("/Dashboard") Index.js/App.js/Dashboard
 
-Features
+## Git Repository
+Local: Yes
+Remote: https://github.com/Dojo-MERNProject/AdventureSPA (Private)
+
+## Stack
+- Node
+- React
+- MongoDB (Express & Mongoose)
+
+## Dependencies
+- cors
+- express
+- mongoose
+- node-sass
+- axios
+- bootstrap
+- mapbox-gl
+- reach/router
+
+### Testing
+None Yet
+
+### Deployment
+Not Current
+
+### Security
+- No Access tokens, Usernames or passwords included in repository
+- Check after integrating API Data poplation
+
+### Features
 - View all Points of interest on one map
 - Create an "Adventure List" of "Stops" for a secific location/outdoor trip
 - See Historical weather data for more informed planning
@@ -11,28 +49,28 @@ Features
   - For example: Apple Maps vs Google Maps, OpenWeather vs WeatherUnderground
 - Import personal set of data points
 
-API's
+### API's
 - Mapping:
-  - Mapbox
-  - Google Maps
-  - Apple Maps
-  - Waze
+  - Mapbox: Current
+  - Google Maps: Future
+  - Apple Maps: Future
+  - Waze: Future
 - Adventure APIs:
-  - Mountain Project
-  - Hiking Project
-  - Mountain Bike Project
-  - Powder Project
-  - Trail Run Project
-  - National Parks Project
+  - Mountain Project: Current
+  - Hiking Project: Current
+  - Mountain Bike Project: Current
+  - Powder Project: Current
+  - Trail Run Project: Current
+  - National Parks Project: Future
 - Weather APIs:
-  - OpenWeather
-  - WeatherUnderground
-  - Weather.com
+  - OpenWeather: Future
+  - WeatherUnderground: Future
+  - Weather.com: Future
 - Future Data
   - Waterfalls
   - Hot Springs
   - Scenic Overlooks
-- Importable Data
+- Importable Data: Future
   - Excel
   - GeoJSON
   - XML

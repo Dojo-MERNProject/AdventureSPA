@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import AdventureLayers from './Dashboard/AdventureLayers';
 import Map from './Dashboard/Map';
+import AdventureLayers from './Dashboard/AdventureLayers';
 import AdventureStops from './Dashboard/AdventureStops';
 import Travel from './Dashboard/Travel';
 import Weather from './Dashboard/Weather';
@@ -9,7 +9,7 @@ import Weather from './Dashboard/Weather';
 const Dashboard = (props) => {
 
   //State
-  const [map, setMap] = useState({});
+  const [map, setMap] = useState({}); // Blank map state
   const [mountains,setMountains] = useState(
     {
     nam: "The Mountain",

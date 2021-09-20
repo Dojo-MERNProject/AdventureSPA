@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0px;
   margin: 0px;
 }
@@ -11,61 +11,97 @@ th {
   background-color: darkgray;
   color: white;
 }
-td, th {
+td,
+th {
   padding: 5px;
   text-align: center;
 }
-.dashboardContainer{
+.dashboardContainer {
   width: 95%;
   overflow: hidden;
   margin: auto;
-}
 
-/* ROWS */
-.toprow, .bottomrow{
-  display: flex;
-}
+  /* ROWS */
+  .toprow,
+  .bottomrow {
+    display: flex;
+  }
 
-/* MAP */
-.map{
-  /* border: solid green; */
-  width: 100%;
-  display: flex;
-  flex-shrink: 2;
-  font-size: 2em;
-  transition: .4s;
-}
+  /* MAP */
+  .map {
+    /* border: solid green; */
+    width: 100%;
+    display: flex;
+    flex-shrink: 2;
+    font-size: 2em;
+    transition: 0.4s;
 
-.leftSideArrow{
-  position: relative;
-  top: 325px;
-  left: -5px;
-  z-index: 5;
-  display: inline-block;
-}
+    // Arrows
+    .arrow {
+      border: solid black;
+      border-width: 0 3px 3px 0;
+      display: inline-block;
+      padding: 3px;
+    }
+      .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
 
-.rightSideArrow{
-  position: absolute;
-  top: 350px;
-  right: 32px;
-  z-index: 5;
-  display: inline-block;
-}
+      .left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+      }
 
-.rightDrawerArrow{
-  position: absolute;
-  z-index: 5;
-  top: 585px;
-  right: 200px;
-  font-weight: bold;
-}
+      .up {
+        transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+      }
 
-.leftDrawerArrow{
-  position: absolute;
-  z-index: 5;
-  top: 585px;
-  left: 200px;
-  font-weight: bold;
+      .down {
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+      
+    }
+
+    .leftSideArrow,
+    .rightSideArrow {
+      width: 10px;
+      height: 55px;
+      padding: 2px;
+      border: solid black 1px;
+    }
+
+    .leftSideArrow {
+      position: relative;
+      top: 325px;
+      left: 0px;
+      z-index: 5;
+      display: inline-block;
+    }
+    .rightSideArrow {
+      position: absolute;
+      top: 350px;
+      right: 50px;
+      z-index: 5;
+      display: inline-block;
+    }
+    .rightDrawerArrow {
+      position: absolute;
+      z-index: 5;
+      top: 585px;
+      right: 200px;
+      font-weight: bold;
+    }
+
+    .leftDrawerArrow {
+      position: absolute;
+      z-index: 5;
+      top: 585px;
+      left: 200px;
+      font-weight: bold;
+    }
+  }
 }
 
 /* MAP Markers */
@@ -89,8 +125,7 @@ td, th {
 
 .mapboxgl-popup {
   max-width: 400px;
-  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 /* NAVBAR */
@@ -121,46 +156,43 @@ td, th {
 }
 
 .dashboardNav a.active {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
-
-
-
-.bottomrow{
+.bottomrow {
   margin-top: 50px;
   justify-content: space-between;
 }
 
-
 /* SIDEBARS */
-.layers, .map, .stops{
+.layers,
+.map,
+.stops {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  border:solid 1px black;
+  border: solid 1px black;
   background-color: white;
 }
 
-
 /* LAYERS SIDEBAR */
-.layers{
+.layers {
   padding: 3%;
   height: 535px;
   color: white;
-  transition: .4s;
+  transition: 0.4s;
   overflow-x: hidden;
 }
 
 .leftopen {
   width: 20%;
-
 }
 
 .rightopen {
   width: 30%;
 }
 
-.leftclosed, .rightclosed{
+.leftclosed,
+.rightclosed {
   width: 0%;
 }
 
@@ -173,21 +205,20 @@ td, th {
 }
 
 /* LAYER TOGGLES */
-.toggleName{
+.toggleName {
   display: inline-block;
   color: black;
   margin: 3px;
-  
 }
 
-.toggle{
+.toggle {
   height: 11px;
   width: 11px;
   display: inline-block;
   margin-right: 5px;
 }
 
-.climbingToggle{
+.climbingToggle {
   background: url(Mountain.svg);
   /* background-color:lightskyblue; */
   height: 11px;
@@ -195,84 +226,79 @@ td, th {
   margin-right: 5px;
 }
 
-.hikingToggle{
-  background-color:lightgreen;
+.hikingToggle {
+  background-color: lightgreen;
   height: 11px;
   width: 11px;
   margin-right: 5px;
 }
 
-.trailRunToggle{
-  background-color: #C16026;
+.trailRunToggle {
+  background-color: #c16026;
   height: 11px;
   width: 11px;
   margin-right: 5px;
 }
 
-.mountainBikeToggle{
-  background-color:lightgreen;
-  
+.mountainBikeToggle {
+  background-color: lightgreen;
+
   height: 11px;
   width: 11px;
   margin-right: 5px;
 }
 
-.waterfallToggle{
-  background-color:#45B782;
+.waterfallToggle {
+  background-color: #45b782;
   border: "solid gray 1px";
   height: 11px;
   width: 11px;
   margin-right: 5px;
 }
 
-.scenicOverlookToggle{
-  background-color:#EBC627;
+.scenicOverlookToggle {
+  background-color: #ebc627;
   border: "solid gray 1px";
   height: 11px;
   width: 11px;
   margin-right: 5px;
 }
 
-.hotSpringToggle{
-  background-color:#80BACC;
+.hotSpringToggle {
+  background-color: #80bacc;
   border: "solid gray 1px";
   height: 11px;
   width: 11px;
   margin-right: 5px;
 }
-
 
 /* STOPS SIDEBAR */
-.stops{
+.stops {
   /* border: dashed greenyellow; */
   /* display: inline-block; */
   padding: 3%;
   height: 535px;
   max-width: 25%;
-  transition: .4s;
+  transition: 0.4s;
   overflow-x: hidden;
   overflow: scroll;
 }
 
-h3{
+h3 {
   margin-bottom: 10px;
 }
 
-p{
+p {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-
-
-.stopDateTime{
+.stopDateTime {
   width: 40px; /* Not doing anything to <span> */
-  
 }
 
-
 /* TRAVEL BOTTOM BAR */
-.travel{
+.travel {
   /* display: inline-block; */
   /* -ms-flex: 0 0 50%;
   flex: 0 0 50%;
@@ -282,27 +308,20 @@ p{
   max-width: 50%; */
   height: 200px;
   overflow-x: hidden;
-  transition: width .4s;
-  background-color: gray
+  transition: width 0.4s;
+  background-color: gray;
 }
 
-.ldraweropen{
+.ldraweropen {
   width: 50%;
-
 }
 
-
-
-.ldrawerclosed{
+.ldrawerclosed {
   width: 0%;
 }
 
-
-
-
-
 /* WEATHER BOTTOM BAR */
-.weather{
+.weather {
   /* border: dashed lightskyblue; */
   /* display: inline-block; */
   /* -ms-flex: 0 0 50%;
@@ -312,18 +331,16 @@ p{
   flex-basis: 50%;
   max-width: 50%; */
   width: 0%;
-  height:200px;
+  height: 200px;
   background-color: gray;
-  transition: width .4s;
+  transition: width 0.4s;
 }
 
-
-.rdraweropen{
+.rdraweropen {
   width: 50%;
-  
 }
 
-.rightdrawerclosed{
+.rightdrawerclosed {
   width: 0%;
 }
 
@@ -331,11 +348,9 @@ p{
   margin-right: -20px;
 }
 
-
-button{
+button {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-color: white;
   padding: 3px;
   border-radius: 4px;
-  
 }

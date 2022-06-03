@@ -1,6 +1,11 @@
 # AdventureSPA
 MERN Adventure Planning app combining all adventure project API's with weather, travel &amp; scenic sites
 
+  <p align="center">
+    <img style="display: block;" src="./Portfolio/Adventure Map.png" alt="">
+    <img src="./Portfolio/Route Data.png" alt="">
+  </p>
+
 ## Basic Info
 - Current Status: Not Operational
 - Reason: Map not loading
@@ -9,7 +14,7 @@ MERN Adventure Planning app combining all adventure project API's with weather, 
 - Server: 8000
 - Database: AdventureSPA
 - Front-End: 3000 (Default)
-  - Start Point: ("/Dashboard") Index.js/App.js/Dashboard
+  - Start Point: ("/Dashboard") Index.js/App.js/Dashboard.jsx
 
 ## Git Repository
 - Local: Yes

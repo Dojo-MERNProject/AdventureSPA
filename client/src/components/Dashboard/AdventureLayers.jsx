@@ -10,7 +10,6 @@ const AdventureLayers = ({
     <div>
       <div className="sidebarToggle"
         id="layers"
-        className="icon"
         onClick={leftSidebarHandler}>
         &equiv;
       </div>
@@ -26,33 +25,33 @@ const AdventureLayers = ({
         <div className="toggle climbingToggle" style={climbingToggleStyle} onClick={climbingToggleHandler}></div>
         <div className="toggleName">Climbing routes</div>
       </div>
-      <div className="row2">
+      <div className="row">
         <div className="toggle hikingToggle" style={hikingToggleStyle} onClick={hikingToggleHandler}></div>
         <div className="toggleName">Hiking Trails</div>
       </div>
-      <div className="row2">
+      <div className="row">
         <div className="toggle powderToggle" style={powderToggleStyle} onClick={powderToggleHandler}></div>
         <div className="toggleName">Powder Runs</div>
       </div>
-      <div className="row2">
+      <div className="row">
         <div className="toggle trailRunToggle" style={trailRunToggleStyle} onClick={trailRunToggleHandler}></div>
         <div className="toggleName">Trail Runs</div>
       </div>
-      <div className="row2">
+      <div className="row">
         <div className="toggle mountainBikeToggle" onClick={toggleHandler}></div>
         <div className="toggleName">Mountain Bike Trails</div>
       </div>
       <br />
       <div className="row">Sights</div>
-      <div className="row2">
+      <div className="row">
         <div className="toggle waterfallToggle" onClick={toggleHandler}></div>
         <div className="toggleName">Waterfalls</div>
       </div>
-      <div className="row2">
+      <div className="row">
         <div className="toggle scenicOverlookToggle" onClick={toggleHandler}></div>
         <div className="toggleName">Scenic Overlooks</div>
       </div>
-      <div className="row2">
+      <div className="row">
         <div className="toggle hotSpringToggle" onClick={toggleHandler}></div>
         <div className="toggleName">Hot Springs</div>
       </div>

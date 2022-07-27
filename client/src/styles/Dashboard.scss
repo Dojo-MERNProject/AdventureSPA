@@ -21,6 +21,23 @@ th {
   overflow: hidden;
   margin: auto;
 
+  .toggleName{
+    color: black;
+  }
+
+  .mapdiv, .map-container {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
   /* ROWS */
   .toprow,
   .bottomrow {
@@ -216,60 +233,36 @@ th {
   width: 11px;
   display: inline-block;
   margin-right: 5px;
+  border: solid gray 1px;
 }
 
 .climbingToggle {
   background: url(Mountain.svg);
-  /* background-color:lightskyblue; */
-  height: 11px;
-  width: 11px;
-  margin-right: 5px;
 }
 
 .hikingToggle {
   background-color: lightgreen;
-  height: 11px;
-  width: 11px;
-  margin-right: 5px;
 }
 
 .trailRunToggle {
   background-color: #c16026;
-  height: 11px;
-  width: 11px;
-  margin-right: 5px;
 }
 
 .mountainBikeToggle {
   background-color: lightgreen;
-
-  height: 11px;
-  width: 11px;
-  margin-right: 5px;
 }
 
 .waterfallToggle {
   background-color: #45b782;
-  border: "solid gray 1px";
-  height: 11px;
-  width: 11px;
-  margin-right: 5px;
+  
 }
 
 .scenicOverlookToggle {
   background-color: #ebc627;
-  border: "solid gray 1px";
-  height: 11px;
-  width: 11px;
-  margin-right: 5px;
 }
 
 .hotSpringToggle {
   background-color: #80bacc;
-  border: "solid gray 1px";
-  height: 11px;
-  width: 11px;
-  margin-right: 5px;
 }
 
 /* STOPS SIDEBAR */
@@ -299,13 +292,6 @@ p {
 
 /* TRAVEL BOTTOM BAR */
 .travel {
-  /* display: inline-block; */
-  /* -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 50%;
-  max-width: 50%; */
   height: 200px;
   overflow-x: hidden;
   transition: width 0.4s;
@@ -322,14 +308,6 @@ p {
 
 /* WEATHER BOTTOM BAR */
 .weather {
-  /* border: dashed lightskyblue; */
-  /* display: inline-block; */
-  /* -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 50%;
-  max-width: 50%; */
   width: 0%;
   height: 200px;
   background-color: gray;

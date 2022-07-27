@@ -439,8 +439,6 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
 
   return (
     <div className="mapdiv">
-      {/* <p>{mountains}</p> */}
-      <div>Adventure App</div>
       <div className="leftSideArrow" onClick={leftSidebarHandler}>
         <div className="arrow right" ></div>
       </div>

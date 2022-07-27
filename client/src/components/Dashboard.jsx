@@ -10,15 +10,19 @@ const Dashboard = (props) => {
 
   //State
   const [map, setMap] = useState({}); // Blank map state
-  const [mountains,setMountains] = useState(
+
+  // Dummy data for mountains
+  const [mountains, setMountains] = useState(
     {
-    nam: "The Mountain",
-    tie: "of CO"
-  },
-  {
-    nam: "The Mountain2",
-    tie: "of CA"
-  })
+      nam: "The Mountain",
+      tie: "of CO"
+    },
+    {
+      nam: "The Mountain2",
+      tie: "of CA"
+    })
+
+  // Dummy data for stops
   const [stops, setStops] = useState([
     {
       title: "Crazy Crag",
@@ -49,15 +53,17 @@ const Dashboard = (props) => {
       }
     }
   ])
-  const [adventure, setAdventure] = useState("Open");
-  const [layersOpen, setLayersOpen] = useState(false);
-  const [leftOpen, setLeftOpen] = useState(false);
-  const [rightOpen, setRightOpen] = useState(false);
-  const [leftDrawer, setLeftDrawer] = useState(false);
-  const [rightDrawer, setRightDrawer] = useState(false);
-  const [spotsOpen, setSpotsOpen] = useState(true);
 
-  // Style States
+  // Blank variable for adventure (Itinerary)
+  const [adventure, setAdventure] = useState("Open");
+
+  // Not Sure
+  // const [layersOpen, setLayersOpen] = useState(false);
+
+  // Left Sidebar open boolean
+  const [leftOpen, setLeftOpen] = useState(false);
+
+  // Left Sidebar Toggle Style States
   const [climbingToggleStyle, setClimbingToggleStyle] = useState({
     // background: url(Mountain.svg),
     backgroundColor: "#336799",
@@ -75,6 +81,20 @@ const Dashboard = (props) => {
     backgroundColor: "#C16026",
     border: "solid gray 1px"
   });
+
+  // Right Sidebar open boolean
+  const [rightOpen, setRightOpen] = useState(false);
+
+  // Left Bottom Drawer open boolean
+  const [leftDrawer, setLeftDrawer] = useState(false);
+
+  // Rigt Bottom Drawer open boolean
+  const [rightDrawer, setRightDrawer] = useState(false);
+
+  // Not sure
+  // const [spotsOpen, setSpotsOpen] = useState(true);
+
+
 
   // Handlers
   // const sideBarHandler = (e) => {
@@ -121,7 +141,7 @@ const Dashboard = (props) => {
 
   const toggleHandler = (e) => {
     console.log("Toggle Handler")
-    
+
     //Toggle this.layer on and off
     // bool: if on, turn off.  if off, turn on
   }
@@ -227,7 +247,7 @@ const Dashboard = (props) => {
     }
   }
 
-  const addStop = (routeid,routetitle) => {
+  const addStop = (routeid, routetitle) => {
     console.log(stops)
     var newStops = [...stops,
     {
@@ -237,7 +257,7 @@ const Dashboard = (props) => {
         color: "#336799"
       }
     }]
-    console.log("New Stops",newStops)
+    console.log("New Stops", newStops)
     setStops(newStops)
     setAdventure("Closed")
     console.log(adventure)
@@ -259,9 +279,9 @@ const Dashboard = (props) => {
               powderToggleStyle={powderToggleStyle}
               trailRunToggleHandler={trailRunToggleHandler}
               trailRunToggleStyle={trailRunToggleStyle}
-              leftSidebarHandler = {leftSidebarHandler}
+              leftSidebarHandler={leftSidebarHandler}
 
-              mountains = {mountains}
+              mountains={mountains}
             />
           </div>
           <div className="map">
@@ -269,15 +289,15 @@ const Dashboard = (props) => {
               map={map}
               setMap={setMap}
               stops={stops}
-              setStops = {setStops}
-              addStop = {addStop}
-              adventure = {adventure}
-              mountains = {mountains}
-              setMountains = {setMountains}
-              leftSidebarHandler = {leftSidebarHandler}
-              rightSidebarHandler = {rightSidebarHandler}
-              leftDrawerHandler= {leftDrawerHandler}
-              rightDrawerHandler= {rightDrawerHandler}
+              setStops={setStops}
+              addStop={addStop}
+              adventure={adventure}
+              mountains={mountains}
+              setMountains={setMountains}
+              leftSidebarHandler={leftSidebarHandler}
+              rightSidebarHandler={rightSidebarHandler}
+              leftDrawerHandler={leftDrawerHandler}
+              rightDrawerHandler={rightDrawerHandler}
             />
           </div>
           <div className={`stops ${rightOpen ? 'rightopen' : 'rightclosed'}`}>

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Single event within the adventure (itinerary)
 const StopSchema = new mongoose.Schema(
   {
     name: {

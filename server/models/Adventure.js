@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Complete Adventure (Itinerary)
 const AdventureSchema = new mongoose.Schema(
   {
     name: {

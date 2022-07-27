@@ -57,9 +57,6 @@ const Dashboard = (props) => {
   // Blank variable for adventure (Itinerary)
   const [adventure, setAdventure] = useState("Open");
 
-  // Not Sure
-  // const [layersOpen, setLayersOpen] = useState(false);
-
   // Left Sidebar open boolean
   const [leftOpen, setLeftOpen] = useState(false);
 
@@ -91,59 +88,24 @@ const Dashboard = (props) => {
   // Rigt Bottom Drawer open boolean
   const [rightDrawer, setRightDrawer] = useState(false);
 
-  // Not sure
-  // const [spotsOpen, setSpotsOpen] = useState(true);
-
-
-
-  // Handlers
-  // const sideBarHandler = (e) => {
-  //   // Reference: https://davidde.github.io/sidebars/
-  //   // Github: https://github.com/davidde/sidebars
-  //   // SASS: https://sass-lang.com/guide
-  //   console.log("Sidebar Handler")
-  //   console.log(`${e.target.id}`)
-  //   // changeCSSLayers(layersOpen);
-  //   setLeftOpen(!leftOpen);
-  //   console.log("layersOpen State: ",leftOpen)
-  //   let layersOpenClass = leftOpen? 'open' : 'closed'; //let is within this scope
-  //   console.log("layersOpen CSS: ",leftOpen)
-  // };
-
   const leftSidebarHandler = (e) => {
-    console.log(`${e.target.id}`)
-    setLeftOpen(!leftOpen);
-    console.log("leftOpen State: ", leftOpen)
+    setLeftOpen(!leftOpen); // Set boolean to opposite of current state
   }
 
   const rightSidebarHandler = (e) => {
-    console.log(`${e.target.id}`)
-    setRightOpen(!rightOpen);
-    console.log("leftOpen State: ", rightOpen)
+    setRightOpen(!rightOpen); // Set boolean to opposite of current state
   }
 
   const leftDrawerHandler = (e) => {
-    console.log(`${e.target.id}`)
-    setLeftDrawer(!leftDrawer);
-    console.log("leftOpen State: ", leftDrawer)
+    setLeftDrawer(!leftDrawer); // Set boolean to opposite of current state
   }
 
   const rightDrawerHandler = (e) => {
-    console.log(`${e.target.id}`)
-    setRightDrawer(!rightDrawer);
-    console.log("leftOpen State: ", rightDrawer)
+    setRightDrawer(!rightDrawer); // Set boolean to opposite of current state
   }
 
-  // function changeCSSLayers (layersOpenState) {
-  //   let layersOpenClass = layersOpenState? 'open' : 'closed'; //let is within this scope
-  //       console.log("layersOpen CSS: ",layersOpenClass)
-  // }
-
   const toggleHandler = (e) => {
-    console.log("Toggle Handler")
-
-    //Toggle this.layer on and off
-    // bool: if on, turn off.  if off, turn on
+    console.log("Empty Toggle Handler")
   }
 
   const climbingToggleHandler = (e) => {

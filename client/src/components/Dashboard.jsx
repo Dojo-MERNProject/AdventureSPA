@@ -228,9 +228,9 @@ const Dashboard = (props) => {
 
   return (
     <div>
-      <div className="dashboardContainer">
-        <div className="toprow">
-          <div className={`layers ${leftOpen ? 'leftopen' : 'leftclosed'}`}>
+      <div className="dashboard">
+        <div className="top-row">
+          <div className={`layers ${leftOpen ? 'leftopen' : 'leftclosed'}`}>  {/* Toggle div on and off */}
             <AdventureLayers
               toggleHandler={toggleHandler}
               climbingToggleHandler={climbingToggleHandler}
@@ -262,21 +262,22 @@ const Dashboard = (props) => {
               rightDrawerHandler={rightDrawerHandler}
             />
           </div>
-          <div className={`stops ${rightOpen ? 'rightopen' : 'rightclosed'}`}>
+          <div className={`stops ${rightOpen ? 'rightopen' : 'rightclosed'}`}>  {/* Toggle div on and off */}
             <AdventureStops
               stops={stops}
               setStops={setStops}
             />
           </div>
         </div>
-        <div className="bottomrow">
-          <div className={`travel ${leftDrawer ? 'ldraweropen' : 'ldrawerclosed'}`}>
+        <div className="bottom-row">
+          <div className={`travel ${leftDrawer ? 'ldraweropen' : 'ldrawerclosed'}`}>  {/* Toggle div on and off */}
             <Travel
               stops={stops}
               setStops={setStops}
             />
           </div>
-          <div className={`weather ${rightDrawer ? 'rdraweropen' : 'rdrawerclosed'}`}><Weather /></div>
+          <div className={`weather ${rightDrawer ? 'rdraweropen' : 'rdrawerclosed'}`}>  {/* Toggle div on and off */}
+            <Weather /></div>
         </div>
       </div>
     </div>

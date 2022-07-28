@@ -16,7 +16,7 @@ th {
   padding: 5px;
   text-align: center;
 }
-.dashboardContainer {
+.dashboard {
   width: 95%;
   overflow: hidden;
   margin: auto;
@@ -39,8 +39,8 @@ th {
   }
 
   /* ROWS */
-  .toprow,
-  .bottomrow {
+  .top-row,
+  .bottom-row {
     display: flex;
   }
 
@@ -55,8 +55,8 @@ th {
 
     // Arrows
     .arrow {
-      border: solid black;
-      border-width: 0 3px 3px 0;
+      border: solid #D8DADB;
+      border-width: 0 1px 1px 0;
       display: inline-block;
       padding: 3px;
     }
@@ -81,27 +81,27 @@ th {
       
     }
 
-    .leftSideArrow,
-    .rightSideArrow {
+    .left-arrow,
+    .right-arrow {
       width: 10px;
       height: 55px;
-      padding: 2px;
-      border: solid black 1px;
+      padding: 5px;
+      border: solid #D8DADB 1px;
+      border-radius: 5px;
+      box-shadow: 1px 1px #D8DADB;
+      display: inline-block;
+      z-index: 5;
     }
 
-    .leftSideArrow {
+    .left-arrow {
       position: relative;
       top: 325px;
       left: 0px;
-      z-index: 5;
-      display: inline-block;
     }
-    .rightSideArrow {
+    .right-arrow {
       position: absolute;
       top: 350px;
       right: 50px;
-      z-index: 5;
-      display: inline-block;
     }
     .rightDrawerArrow {
       position: absolute;

@@ -1,8 +1,23 @@
-.testMan{
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+<<<<<<< HEAD
+.rows{
+  margin-top: 10px;
+}
+=======
+
+.test{
   color: red;
   border: solid blue 1px;
 }
 
-.rows{
-  margin-top: 10px;
+.toggleName{
+  color: black;
 }
+
+
+>>>>>>> client

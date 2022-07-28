@@ -438,11 +438,11 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
 
 
   return (
-    <div className="mapdiv">
-      <div className="leftSideArrow" onClick={leftSidebarHandler}>
+    <div className="map-overlay">
+      <div className="left-arrow" onClick={leftSidebarHandler}>
         <div className="arrow right" ></div>
       </div>
-      <div className="rightSideArrow" onClick={rightSidebarHandler}>
+      <div className="right-arrow" onClick={rightSidebarHandler}>
       <div className="arrow left" ></div>
       </div>
       <div  className="leftDrawerArrow" onClick={leftDrawerHandler}></div>

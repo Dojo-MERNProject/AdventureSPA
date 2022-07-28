@@ -7,8 +7,8 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 // UPDATE: Create Functions that take an array & returns modified array
 // UPDATE: Use function return data instead of state data
 
-const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMountains,
-  leftSidebarHandler, rightSidebarHandler, leftDrawerHandler, rightDrawerHandler}) => {
+const Map = ({ map, setMap, stops, setStops, addStop, adventure, mountains, setMountains,
+  leftSidebarHandler, rightSidebarHandler, leftDrawerHandler, rightDrawerHandler }) => {
 
   const [center, setCenter] = useState();
   const mapContainerRef = useRef(null);
@@ -91,7 +91,7 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
     // Add Stops
     // setStops(
 
-    
+
     map.on("click", "routeFeatures", function (e) {
       var coordinates = e.features[0].geometry.coordinates.slice();
       var description = e.features[0].properties.description;
@@ -109,9 +109,9 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         .setHTML(description)
         .addTo(map);
 
-        setMountains("2200")
-        addStop(id, title)
-      console.log("Map",stops)
+      setMountains("2200")
+      addStop(id, title)
+      console.log("Map", stops)
       // return addStop(id, title)
     })
     // )
@@ -185,25 +185,25 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
   };
 
   // function addStop(id, title) {
-    // console.log(stops)
-    // var newStops = [...stops,
-    // {
-    //   title: `${title}`,
-    //   type: "route",
-    //   style: {
-    //     color: "#336799"
-    //   }
-    // }]
-    // console.log("New Stops",newStops)
-    // setStops(newStops)
-    // setStops([{
-    //   title: `${title}`,
-    //   type: "route",
-    //   style: {
-    //     color: "#336799"
-    //   }
-    // }])
-    // return newStops
+  // console.log(stops)
+  // var newStops = [...stops,
+  // {
+  //   title: `${title}`,
+  //   type: "route",
+  //   style: {
+  //     color: "#336799"
+  //   }
+  // }]
+  // console.log("New Stops",newStops)
+  // setStops(newStops)
+  // setStops([{
+  //   title: `${title}`,
+  //   type: "route",
+  //   style: {
+  //     color: "#336799"
+  //   }
+  // }])
+  // return newStops
   // }
 
   // Get all hike data for specific center point
@@ -443,11 +443,11 @@ const Map = ({ map, setMap, stops, setStops, addStop,adventure, mountains, setMo
         <div className="arrow right" ></div>
       </div>
       <div className="right-arrow" onClick={rightSidebarHandler}>
-      <div className="arrow left" ></div>
+        <div className="arrow left" ></div>
       </div>
-      <div  className="leftDrawerArrow" onClick={leftDrawerHandler}></div>
+      <div className="leftDrawerArrow" onClick={leftDrawerHandler}></div>
       <div className="rightDrawerArrow" onClick={rightDrawerHandler}></div>
-      <div className="map-container" ref={mapContainerRef} />
+      <div className="map-container" ref={mapContainerRef}></div>
     </div>
   )
 }

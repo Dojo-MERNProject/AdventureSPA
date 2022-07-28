@@ -10,7 +10,7 @@ import './styles/features/mapbox.css'
 
 // Components
 import Dashboard from './components/Dashboard'
-import Map from './components/Dashboard/Map'
+// import Map from './components/Dashboard/Map'
 
 function App() {
   return (
@@ -19,9 +19,9 @@ function App() {
         <Dashboard
           path="/Dashboard"
         />
-        <Map
+        {/* <Map
           path="/map"
-        />
+        /> */}
       </Router>
     </div>
   );

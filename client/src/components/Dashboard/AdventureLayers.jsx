@@ -10,7 +10,6 @@ const AdventureLayers = ({
     <div>
       <div className="sidebarToggle"
         id="layers"
-        className="icon"
         onClick={leftSidebarHandler}>
         &equiv;
       </div>
